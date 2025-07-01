@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Stuiter</title>
+  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.typekit.net/xsq4yeu.css">
+</head>
+<body>
+  <!-- Menu button -->
+  <button class="menu-btn" onclick="toggleSideMenu()">
+    <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+    </svg>
+  </button>
+
+  <!-- Side menu -->
+  <div id="sideMenu" class="side-menu">
+    <button class="close-menu-btn" onclick="toggleSideMenu()">&times;</button>
+    <div class="menu-content">
+      <h3>Over Studio Stuiter</h3>
+      <img src="/4x/Asset 6@4x.png" alt="Daan Hobbel" class="foto">
+      <p>Ik steek zowel fysiek als digitaal graag de handen uit de mouwen. Hierdoor kan ik niet alleen goed overweg met Unity, Python, Adobe-programma's en andere digitale talen/tools, maar zijn lasersnijders en 3D-printers ook niet vreemd voor mij. 
+
+Naast kunde bied ik ook ontwerpgerichte kennis. Het onderzoeken welke tool of techniek je het beste in de context kan toepassen is voor mij net zo belangrijk als het kunnen toepassen zelf.
+        <br><br>
+        Wil je blijven volgen wat voor leuks ik doe? Volg me op social media!<br><br>
+        <div class="social-links">
+          <a href="https://www.instagram.com/mostcertainlynotme/" target="_blank" class="social-link instagram">
+            <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            @mostcertainlynotme
+          </a>
+          <a href="https://www.linkedin.com/in/daan-hobbel-158360134/" target="_blank" class="social-link linkedin">
+            <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            LinkedIn
+          </a>
+        </div></p>
+    </div>
+  </div>
+
+  <!-- Menu overlay -->
+  <div id="menuOverlay" class="menu-overlay" onclick="toggleSideMenu()"></div>
+
+  <!-- Scroll down arrow -->
+  <button class="scroll-arrow" onclick="scrollToProjects()">
+    <svg class="arrow-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+    </svg>
+  </button>
+
+  <main>
+    <section class="intro">
+      <br>
+      <br>
+     <section class="introtext"> 
+      <img src="4x/Asset 6@4x.png" alt="Studio Stuiter logo" class="logo">
+       <p><span><b>DAAN HOBBEL</b> - <i>DESIGNER & DEVELOPER</i></span>
+       <br>Creativiteit die stuitert van je scherm! Wij ontwerpen met energie, plezier en impact.</p>
+     </section>
+     
+    </section>
+
+  </main>
+
+  <!-- Projects section -->
+  <section id="projects" class="projects-section">
+    <div class="projects-container">
+      <h2>Projecten</h2>
+      
+      <!-- Filter buttons -->
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">Alle</button>
+        <button class="filter-btn" data-filter="web">Web Design</button>
+        <button class="filter-btn" data-filter="app">App Development</button>
+        <button class="filter-btn" data-filter="branding">Branding</button>
+        <button class="filter-btn" data-filter="3d">3D Design</button>
+      </div>
+
+      <!-- Projects grid -->
+      <div class="projects-grid">
+        <div class="project-card" data-category="web" onclick="toggleProjectDetails(this)">
+          <div class="project-image">
+            <img src="https://via.placeholder.com/300x200/FFA300/FFFFFF?text=Web+Project+1" alt="Web Project 1">
+          </div>
+          <div class="project-info">
+            <h3>Website Redesign</h3>
+            <p>Een moderne website met focus op gebruiksvriendelijkheid en responsive design.</p>
+          </div>
+          <div class="project-tags">
+          <span class="tag">HTML/CSS</span>
+          <span class="tag">JavaScript</span>
+        </div>
+          <div class="project-details">
+            <div class="project-details-content">
+              <h3>Website Redesign - Uitgebreide Details</h3>
+              <div class="project-details-grid">
+                <div class="project-details-text">
+                  <h4>Projectomschrijving</h4>
+                  <p>Dit project betrof een complete redesign van een bestaande website met focus op moderne gebruiksvriendelijkheid en responsive design. Het doel was om de gebruikerservaring te verbeteren en de website toegankelijk te maken op alle apparaten.</p>
+                  
+                  <h4>Gebruikte Technologieën</h4>
+                  <ul>
+                    <li>HTML5 & CSS3</li>
+                    <li>JavaScript (ES6+)</li>
+                    <li>Responsive Grid & Flexbox</li>
+                    <li>CSS Animations</li>
+                  </ul>
+                  
+                  <h4>Uitdagingen & Oplossingen</h4>
+                  <p>De grootste uitdaging was het creëren van een naadloze gebruikerservaring op verschillende schermformaten. Dit werd opgelost door gebruik te maken van moderne CSS Grid en Flexbox technieken.</p>
+                </div>
+                <div class="project-details-media">
+                  <img src="https://via.placeholder.com/400x300/FFA300/FFFFFF?text=Project+Details" alt="Project Details">
+                  <section class="gallery3section">
+                    <div id="gallery3" class="gallery3">
+                        <img src="images/grafisch/LOGO 101-43.png" loading="lazy"   alt="Afbeelding 9">
+                        <img src="images/grafisch/HS_Notecard-Invitation (4-1-4” x 5-1-2”)-01.png" loading="lazy"   alt="Afbeelding 7">
+                        <img src="images/grafisch/HS_Notecard-Invitation (4-1-4” x 5-1-2”)-05.png" loading="lazy"   alt="Afbeelding 8">
+                        <img src="images/grafisch/Logo.png" loading="lazy"   alt="Afbeelding 12">
+                        <img src="images/grafisch/logov1_Logo 02- 600 x 600 px.png" loading="lazy"   alt="Afbeelding 13">
+                        <img src="images/grafisch/logov1_Logo 03- 600 x 600 px.png" loading="lazy"   alt="Afbeelding 14">
+                        <img src="images/grafisch/Untitled-1.new1png.png" loading="lazy"   alt="Afbeelding 14">
+                        <img src="images/grafisch/Untitled-1new.png" loading="lazy"   alt="Afbeelding 16">
+                        <img src="images/grafisch/zorgmeubels-05.png" loading="lazy"   alt="Afbeelding 23">
+                        <img src="images/grafisch/zorgmeubels-06.png" loading="lazy"   alt="Afbeelding 24">
+                        <img src="images/grafisch/zorgmeubelsv2.png" loading="lazy"   alt="Afbeelding 25">
+                        <img src="images/grafisch/Asset 134@4x.png" loading="lazy"   alt="Afbeelding 2">
+                        <img src="images/grafisch/socials tbp_Post 2.png" loading="lazy"   alt="Afbeelding 18">
+                        <img src="images/grafisch/22845_Kubus3D-38cm-1181x794-BR.png" loading="lazy"   alt="Afbeelding 1">
+                        <img src="images/grafisch/socials tbp_Post 3.png" loading="lazy"   alt="Afbeelding 19">
+                        <img src="images/grafisch/Uitnodiging_BR_Social_ programma nieuw6.png" loading="lazy"   alt="Afbeelding 21">
+                        <img src="images/grafisch/BRAK-11.png" loading="lazy"   alt="Afbeelding 4">
+                        <img src="images/grafisch/BRAK-12.png" loading="lazy"   alt="Afbeelding 5">
+                        <img src="images/grafisch/BRAK_Logo 01- 600 x 600 px.png" loading="lazy"   alt="Afbeelding 6">
+                        <img src="images/grafisch/logo 1@3x.png" loading="lazy"   alt="Afbeelding 10">
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-category="app" onclick="toggleProjectDetails(this)">
+          <div class="project-image">
+            <img src="https://via.placeholder.com/300x200/8AB3BB/FFFFFF?text=App+Project+1" alt="App Project 1">
+          </div>
+          <div class="project-info">
+            <h3>Mobile App</h3>
+            <p>Een intuïtieve mobiele applicatie voor dagelijks gebruik met clean interface.</p>
+          </div>
+          <div class="project-tags">
+              <span class="tag">React Native</span>
+              <span class="tag">UI/UX</span>
+          </div>
+          <div class="project-details">
+            <div class="project-details-content">
+              <h3>Mobile App - Uitgebreide Details</h3>
+              <div class="project-details-grid">
+                <div class="project-details-text">
+                  <h4>Projectomschrijving</h4>
+                  <p>Een intuïtieve mobiele applicatie ontwikkeld voor dagelijks gebruik met een clean en moderne interface. De app is ontworpen om gebruikers te helpen bij hun dagelijkse taken.</p>
+                  
+                  <h4>Gebruikte Technologieën</h4>
+                  <ul>
+                    <li>React Native</li>
+                    <li>UI/UX Design</li>
+                    <li>Native Modules</li>
+                    <li>State Management</li>
+                  </ul>
+                  
+                  <h4>Uitdagingen & Oplossingen</h4>
+                  <p>Het creëren van een consistente gebruikerservaring op zowel iOS als Android was een belangrijke uitdaging die werd opgelost met React Native's cross-platform capabilities.</p>
+                </div>
+                <div class="project-details-media">
+                  <img src="https://via.placeholder.com/400x300/8AB3BB/FFFFFF?text=App+Details" alt="App Details">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-category="branding" onclick="toggleProjectDetails(this)">
+          <div class="project-image">
+            <img src="https://via.placeholder.com/300x200/FF3B30/FFFFFF?text=Brand+Project+1" alt="Brand Project 1">
+          </div>
+          <div class="project-info">
+            <h3>Brand Identity</h3>
+            <p>Complete merkidentiteit ontwikkeling inclusief logo, kleuren en typografie.</p>
+          </div>
+          <div class="project-tags">
+              <span class="tag">Logo Design</span>
+              <span class="tag">Adobe Creative</span>
+            </div>
+          <div class="project-details">
+            <div class="project-details-content">
+              <h3>Brand Identity - Uitgebreide Details</h3>
+              <div class="project-details-grid">
+                <div class="project-details-text">
+                  <h4>Projectomschrijving</h4>
+                  <p>Complete merkidentiteit ontwikkeling voor een startup, inclusief logo ontwerp, kleurenpalet, typografie en brand guidelines.</p>
+                  
+                  <h4>Gebruikte Technologieën</h4>
+                  <ul>
+                    <li>Adobe Illustrator</li>
+                    <li>Adobe Photoshop</li>
+                    <li>Brand Strategy</li>
+                    <li>Typography</li>
+                  </ul>
+                  
+                  <h4>Uitdagingen & Oplossingen</h4>
+                  <p>Het creëren van een unieke en memorabele merkidentiteit die de waarden van het bedrijf weergeeft en zich onderscheidt in een competitieve markt.</p>
+                </div>
+                <div class="project-details-media">
+                  <img src="https://via.placeholder.com/400x300/FF3B30/FFFFFF?text=Brand+Details" alt="Brand Details">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-category="3d" onclick="toggleProjectDetails(this)">
+          <div class="project-image">
+            <img src="https://via.placeholder.com/300x200/800263/FFFFFF?text=3D+Project+1" alt="3D Project 1">
+          </div>
+          <div class="project-info">
+            <h3>3D Visualisatie</h3>
+            <p>Realistische 3D renders voor productvisualisatie en architectuur.</p>
+          </div>
+          <div class="project-tags">
+              <span class="tag">Blender</span>
+              <span class="tag">3D Modeling</span>
+            </div>
+          <div class="project-details">
+            <div class="project-details-content">
+              <h3>3D Visualisatie - Uitgebreide Details</h3>
+              <div class="project-details-grid">
+                <div class="project-details-text">
+                  <h4>Projectomschrijving</h4>
+                  <p>Realistische 3D renders en visualisaties voor productpresentaties en architecturale projecten met focus op fotorealisme en detail.</p>
+                  
+                  <h4>Gebruikte Technologieën</h4>
+                  <ul>
+                    <li>Blender 3D</li>
+                    <li>3D Modeling</li>
+                    <li>Rendering Engines</li>
+                    <li>Post-processing</li>
+                  </ul>
+                  
+                  <h4>Uitdagingen & Oplossingen</h4>
+                  <p>Het bereiken van fotorealistische resultaten vereiste geavanceerde kennis van lighting, materials en rendering technieken.</p>
+                </div>
+                <div class="project-details-media">
+                  <img src="https://via.placeholder.com/400x300/800263/FFFFFF?text=3D+Details" alt="3D Details">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-category="web" onclick="toggleProjectDetails(this)">
+          <div class="project-image">
+            <img src="https://via.placeholder.com/300x200/FFA300/FFFFFF?text=Web+Project+2" alt="Web Project 2">
+          </div>
+          <div class="project-info">
+            <h3>E-commerce Platform</h3>
+            <p>Volledig functionele webshop met betalingsintegratie en beheerssysteem.</p>
+          </div>
+          <div class="project-tags">
+              <span class="tag">E-commerce</span>
+              <span class="tag">Database</span>
+            </div>
+          <div class="project-details">
+            <div class="project-details-content">
+              <h3>E-commerce Platform - Uitgebreide Details</h3>
+              <div class="project-details-grid">
+                <div class="project-details-text">
+                  <h4>Projectomschrijving</h4>
+                  <p>Een volledig functionele e-commerce platform met geavanceerde features zoals betalingsintegratie, inventarisbeheer en gebruikersaccounts.</p>
+                  
+                  <h4>Gebruikte Technologieën</h4>
+                  <ul>
+                    <li>React.js</li>
+                    <li>Node.js</li>
+                    <li>MongoDB</li>
+                    <li>Payment APIs</li>
+                  </ul>
+                  
+                  <h4>Uitdagingen & Oplossingen</h4>
+                  <p>Het implementeren van veilige betalingsverwerking en het optimaliseren van de database voor grote hoeveelheden productdata.</p>
+                </div>
+                <div class="project-details-media">
+                  <img src="https://via.placeholder.com/400x300/FFA300/FFFFFF?text=Ecommerce+Details" alt="Ecommerce Details">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-category="app" onclick="toggleProjectDetails(this)">
+          <div class="project-image">
+            <img src="https://via.placeholder.com/300x200/8AB3BB/FFFFFF?text=App+Project+2" alt="App Project 2">
+          </div>
+          <div class="project-info">
+            <h3>Productivity App</h3>
+            <p>Een app die helpt bij het organiseren van taken en het verhogen van productiviteit.</p>
+          </div>
+          <div class="project-tags">
+              <span class="tag">Flutter</span>
+              <span class="tag">Cross-platform</span>
+            </div>
+          <div class="project-details">
+            <div class="project-details-content">
+              <h3>Productivity App - Uitgebreide Details</h3>
+              <div class="project-details-grid">
+                <div class="project-details-text">
+                  <h4>Projectomschrijving</h4>
+                  <p>Een productiviteitsapp die gebruikers helpt bij het organiseren van taken, het bijhouden van deadlines en het verhogen van hun dagelijkse productiviteit.</p>
+                  
+                  <h4>Gebruikte Technologieën</h4>
+                  <ul>
+                    <li>Flutter</li>
+                    <li>Dart</li>
+                    <li>SQLite</li>
+                    <li>Push Notifications</li>
+                  </ul>
+                  
+                  <h4>Uitdagingen & Oplossingen</h4>
+                  <p>Het creëren van een intuïtieve interface die complexe functionaliteiten toegankelijk maakt voor alle gebruikers.</p>
+                </div>
+                <div class="project-details-media">
+                  <img src="https://via.placeholder.com/400x300/8AB3BB/FFFFFF?text=Productivity+Details" alt="Productivity Details">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="contact-container">
+      <h2>Sta je te stuiteren om met mij samen te werken?</h2>
+      <p class="contact-intro">Laten we samen iets moois creëren! Stuur me een berichtje en ik neem zo snel mogelijk contact met je op.</p>
+      
+      <form class="contact-form" id="contactForm">
+        <div class="form-group">
+          <label for="name">Naam *</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">E-mail *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="company">Bedrijf</label>
+          <input type="text" id="company" name="company">
+        </div>
+        
+        <div class="form-group">
+          <label for="project-type">Type project</label>
+          <select id="project-type" name="project-type">
+            <option value="">Selecteer een optie</option>
+            <option value="web">Web Design</option>
+            <option value="app">App Development</option>
+            <option value="branding">Branding</option>
+            <option value="3d">3D Design</option>
+            <option value="other">Anders</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="budget">Budget indicatie</label>
+          <select id="budget" name="budget">
+            <option value="">Selecteer een optie</option>
+            <option value="under-1k">Onder €1.000</option>
+            <option value="1k-5k">€1.000 - €5.000</option>
+            <option value="5k-10k">€5.000 - €10.000</option>
+            <option value="over-10k">Boven €10.000</option>
+            <option value="discuss">Bespreekbaar</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="message">Bericht *</label>
+          <textarea id="message" name="message" rows="5" placeholder="Vertel me over je project..." required></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">
+          <span>Verstuur bericht</span>
+          <svg class="send-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </form>
+      
+      <div class="contact-info">
+        <div class="contact-item">
+          <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          <span>info@studiostuiter.nl</span>
+        </div>
+        
+        <div class="contact-item">
+          <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+          </svg>
+          <span>+31 6 12345678</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <h2>Stuiter mij omhoog</h2>
+    <p>© 2025 Studio Stuiter</p>
+    
+    <!-- Scroll up arrow -->
+    <button class="scroll-up-arrow" onclick="scrollToIntro()">
+      <svg class="arrow-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+      </svg>
+    </button>
+  </footer>
+
+  <script>
+    function toggleSideMenu() {
+      const sideMenu = document.getElementById('sideMenu');
+      const menuOverlay = document.getElementById('menuOverlay');
+      
+      if (sideMenu.classList.contains('open')) {
+        sideMenu.classList.remove('open');
+        menuOverlay.classList.remove('active');
+      } else {
+        sideMenu.classList.add('open');
+        menuOverlay.classList.add('active');
+      }
+    }
+
+    // Close menu with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        const sideMenu = document.getElementById('sideMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        if (sideMenu.classList.contains('open')) {
+          sideMenu.classList.remove('open');
+          menuOverlay.classList.remove('active');
+        }
+      }
+    });
+
+    // Scroll to projects section
+    function scrollToProjects() {
+      document.getElementById('projects').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+    // Scroll to intro section
+    function scrollToIntro() {
+      document.querySelector('.intro').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+    // Check if intro section is visible and hide/show scroll arrow accordingly
+    function checkIntroVisibility() {
+      const introSection = document.querySelector('.intro');
+      const scrollArrow = document.querySelector('.scroll-arrow');
+      const rect = introSection.getBoundingClientRect();
+      
+      // If intro section is completely out of view (top is above viewport)
+      if (rect.bottom <= 0) {
+        scrollArrow.style.display = 'none';
+      } else {
+        scrollArrow.style.display = 'flex';
+      }
+    }
+
+    // Add scroll event listener to check intro visibility
+    window.addEventListener('scroll', checkIntroVisibility);
+
+    // Toggle project details
+    function toggleProjectDetails(projectCard) {
+      const details = projectCard.querySelector('.project-details');
+      const isOpen = details.classList.contains('open');
+      
+      // Close all other open details first
+      document.querySelectorAll('.project-details.open').forEach(openDetail => {
+        if (openDetail !== details) {
+          openDetail.classList.remove('open');
+          openDetail.closest('.project-card').classList.remove('details-open');
+        }
+      });
+      
+      if (isOpen) {
+        // Close the details - return to original grid state
+        details.classList.remove('open');
+        projectCard.classList.remove('details-open');
+        
+        // Scroll back to the project card in its original grid position
+        setTimeout(() => {
+          projectCard.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+        }, 400); // Slightly longer delay to ensure grid transition completes
+      } else {
+        // Open the details
+        details.classList.add('open');
+        projectCard.classList.add('details-open');
+        
+        // Scroll to the expanded project card
+        setTimeout(() => {
+          projectCard.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }, 300);
+      }
+    }
+
+    // Project filtering functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('.project-card');
+
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const filter = this.getAttribute('data-filter');
+          
+          // Update active button
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Filter projects
+          projectCards.forEach(card => {
+            if (filter === 'all' || card.getAttribute('data-category') === filter) {
+              card.style.display = 'block';
+              card.style.animation = 'fadeIn 0.5s ease-in';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+
+    // Contact form functionality
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData);
+      
+      // Simple validation
+      if (!data.name || !data.email || !data.message) {
+        alert('Vul alle verplichte velden in (naam, e-mail en bericht).');
+        return;
+      }
+      
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(data.email)) {
+        alert('Voer een geldig e-mailadres in.');
+        return;
+      }
+      
+      // Show loading state
+      const submitBtn = this.querySelector('.submit-btn');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span>Versturen...</span>';
+      submitBtn.disabled = true;
+      
+      // Simulate form submission (replace with actual form handling)
+      setTimeout(() => {
+        // Reset form
+        this.reset();
+        
+        // Show success message
+        alert('Bedankt voor je bericht! Ik neem zo snel mogelijk contact met je op.');
+        
+        // Reset button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        // Optional: scroll to top or show success animation
+        document.querySelector('.contact-section').scrollIntoView({
+          behavior: 'smooth'
+        });
+      }, 2000);
+    });
+
+    // Add smooth scroll to contact section function
+    function scrollToContact() {
+      document.getElementById('contact').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+  </script>
+</body>
+</html>
+
