@@ -34,11 +34,15 @@ body {
   color: var(--text-dark);
   line-height: 1.6;
 }
-#canvas{
-  position:fixed;        
-  display:block;
-  pointer-events:none;  
-  z-index: 0;             
+#canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;               /* ensures it's below your content */
+  pointer-events: none;     /* allows clicks to go through */
+  display: block;
 }
 
 header {
