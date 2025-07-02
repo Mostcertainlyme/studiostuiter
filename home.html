@@ -8,7 +8,10 @@
     <link rel="stylesheet" href="https://use.typekit.net/xsq4yeu.css">
 </head>
 <body>
-  <!-- change made -->
+  <!-- canvas for bouncyshapes -->
+  <canvas id="canvas"></canvas>
+
+  
   <!-- Menu button -->
   <button class="menu-btn" onclick="toggleSideMenu()">
     <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -17,14 +20,14 @@
   </button>
 
   <!-- Side menu -->
-  <div id="sideMenu" class="side-menu">
+  <div id="sideMenu" class="side-menu obstacle">
     <button class="close-menu-btn" onclick="toggleSideMenu()">&times;</button>
     <div class="menu-content">
       <h3>Over Studio Stuiter</h3>
-      <img src="/4x/Asset 6@4x.png" alt="Daan Hobbel" class="foto">
+      <img src="images/logo/Asset 6@4x.png" alt="Daan Hobbel" class="foto">
       <p>Ik steek zowel fysiek als digitaal graag de handen uit de mouwen. Hierdoor kan ik niet alleen goed overweg met Unity, Python, Adobe-programma's en andere digitale talen/tools, maar zijn lasersnijders en 3D-printers ook niet vreemd voor mij. 
 
-Naast kunde bied ik ook ontwerpgerichte kennis. Het onderzoeken welke tool of techniek je het beste in de context kan toepassen is voor mij net zo belangrijk als het kunnen toepassen zelf.
+          Naast kunde bied ik ook ontwerpgerichte kennis. Het onderzoeken welke tool of techniek je het beste in de context kan toepassen is voor mij net zo belangrijk als het kunnen toepassen zelf.
         <br><br>
         Wil je blijven volgen wat voor leuks ik doe? Volg me op social media!<br><br>
         <div class="social-links">
@@ -59,10 +62,9 @@ Naast kunde bied ik ook ontwerpgerichte kennis. Het onderzoeken welke tool of te
       <br>
       <br>
      <section class="introtext"> 
-      <img src="4x/Asset 6@4x.png" alt="Studio Stuiter logo" class="logo">
+      <img src="images/logo/Asset 6@4x.png" alt="Studio Stuiter logo" class="logo">
        <p><span><b>DAAN HOBBEL</b> - <i>DESIGNER & DEVELOPER</i></span>
        <br>Creativiteit die stuitert van je scherm! Wij ontwerpen met energie, plezier en impact.</p>
-       <h1>TEST</h1>
      </section>
      
     </section>
@@ -610,6 +612,54 @@ Naast kunde bied ik ook ontwerpgerichte kennis. Het onderzoeken welke tool of te
       });
     }
   </script>
-</body>
+
+  <script type="module">
+    import BouncyShapesPlayground from './bouncyShapes.js';
+
+    /* playground ------------------------------------------------------- */
+    const pg = new BouncyShapesPlayground({
+      canvas:'#canvas',         // set the canvas div where the shapes live in
+      gravity:1.0,              // set gravity force (less is more floaty)
+      bounceFactor:0.9,         // set bounceFactor this is how much velocity the shape loses everytime it bounces (1 is perfect forever bounce)
+      inertiaFactor:0.5,        // how much moving the window around affects the ball momentum
+      clickBoost:50,            // how much force gets applied to the shape if clicked on
+      spawnSize:120,            // how big the spawned shapes should be
+      enableCollision:true,     // flag to enable shape to shape collision
+      clickSpawn:false,          // flag to enable shape spawning wherever you click in the canvas
+      enableMotion:true,        // flag to enable motion sensors on mobile to affect shape momentum
+      motionFactor:0.8,         // factor to control how much motion gets applied to shape momentum 
+      pattern:['random','progress','solid'],                  // available color patterns for the shape
+      shapeOptions:['circle','square','triangle','star'],     // diff
+    });
+    /* example spawn: hot-pink circle flying in from above -------------- */
+    pg.spawn(
+      pg.spawnSize,                 // off-screen X
+      -pg.spawnSize*3,              // off-screen Y
+      'circle',                     // shape
+      120,                          // size in px
+      'solid',                      // color pattern
+      true,                         // "shape spawns outside of the frame" flag
+      '#ff1493'                     // actual colour when using "solid" option
+    );
+
+    /* turn every .project-card into a *temporary* obstacle on hover */
+    document.querySelectorAll(".project-card").forEach(card => {
+      card.addEventListener("mouseenter", () => {
+        // Avoid duplicates
+        if (!pg.obstacleData.has(card)) {
+          pg.obstacles.push(card);
+          pg.obstacleData.set(card, { lastX: null, vx: 0 });
+        }
+      });
+
+      card.addEventListener("mouseleave", () => {
+        // Remove from arrays / maps so the ball stops colliding
+        const idx = pg.obstacles.indexOf(card);
+        if (idx !== -1) pg.obstacles.splice(idx, 1);
+        pg.obstacleData.delete(card);
+      });
+    });
+  </script>
+  </body>
 </html>
 

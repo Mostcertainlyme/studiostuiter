@@ -17,6 +17,10 @@
   --text-light: #f4f4f4;
   --text-dark: #323232;
   --background: #e2bf95;
+
+  --background-index: 0;
+  --bouncy-index: 1;
+  --foreground-index: 2;
 }
 
 * {
@@ -29,6 +33,12 @@ body {
   background-color: var(--background);
   color: var(--text-dark);
   line-height: 1.6;
+}
+#canvas{
+  position:fixed;        
+  display:block;
+  pointer-events:none;  
+  z-index: 0;             
 }
 
 header {
@@ -451,6 +461,7 @@ footer {
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  z-index: var(--foreground-index);
 }
 
 .project-card:hover {
@@ -623,6 +634,7 @@ footer {
   text-align: center;
   padding: 2rem 1rem;
   position: relative;
+  z-index: var(--background-index);
 }
 
 footer h2 {
