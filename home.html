@@ -87,7 +87,7 @@
 
       <!-- Projects grid -->
       <div class="projects-grid">
-        <div class="project-card" data-category="web" onclick="toggleProjectDetails(this)">
+        <div class="project-card"  data-category="web" onclick="toggleProjectDetails(this)">
           <div class="project-image">
             <img src="https://via.placeholder.com/300x200/FFA300/FFFFFF?text=Web+Project+1" alt="Web Project 1">
           </div>
@@ -424,7 +424,7 @@
     </div>
   </section>
 
-  <footer>
+  <footer class ="obstacle">
     <h2>Stuiter mij omhoog</h2>
     <p>© 2025 Studio Stuiter</p>
     
@@ -631,6 +631,10 @@
       pattern:['random','progress','solid'],                  // available color patterns for the shape
       shapeOptions:['circle','square','triangle','star'],     // diff
     });
+
+    // Make sure the following properties exist!
+    pg.obstacles = pg.obstacles || [];
+    pg.obstacleData = pg.obstacleData || new Map();
     /* example spawn: hot-pink circle flying in from above -------------- */
     pg.spawn(
       pg.spawnSize,                 // off-screen X
@@ -642,23 +646,35 @@
       '#FF3B30'                     // actual colour when using "solid" option
     );
 
-    /* turn every .project-card into a *temporary* obstacle on hover */
-    document.querySelectorAll(".project-card").forEach(card => {
-      card.addEventListener("mouseenter", () => {
-        // Avoid duplicates
-        if (!pg.obstacleData.has(card)) {
-          pg.obstacles.push(card);
-          pg.obstacleData.set(card, { lastX: null, vx: 0 });
-        }
-      });
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".project-card");
 
-      card.addEventListener("mouseleave", () => {
-        // Remove from arrays / maps so the ball stops colliding
-        const idx = pg.obstacles.indexOf(card);
-        if (idx !== -1) pg.obstacles.splice(idx, 1);
-        pg.obstacleData.delete(card);
-      });
+  cards.forEach(card => {
+    card.addEventListener("mouseenter", () => {
+      console.log(`[DEBUG] Mouse entered card:`, card);
+      console.log("[DEBUG] obstacleData already has this card?", pg.obstacleData.has(card));
+
+      if (!pg.obstacleData.has(card)) {
+        pg.obstacles.push(card);
+        pg.obstacleData.set(card, { lastX: null, vx: 0 });
+        console.log(`[DEBUG] Added to obstacles. Total: ${pg.obstacles.length}`);
+      }
     });
+
+    card.addEventListener("mouseleave", () => {
+      console.log(`[DEBUG] Mouse left card:`, card);
+
+      const idx = pg.obstacles.indexOf(card);
+      if (idx !== -1) {
+        pg.obstacles.splice(idx, 1);
+        console.log(`[DEBUG] Removed from pg.obstacles`);
+      }
+
+      const deleted = pg.obstacleData.delete(card);
+      console.log(`[DEBUG] Removed from pg.obstacleData:`, deleted);
+    });
+  });
+});
   </script>
   </body>
 </html>

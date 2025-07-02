@@ -18,10 +18,12 @@
   --text-dark: #323232;
   --background: #e2bf95;
 
-  --background-index: 0;
-  --bouncy-index: 1;
+  --background-index: -1;
+  --bouncy-index: 0;
   --foreground-index: 2;
 }
+
+
 
 * {
   box-sizing: border-box;
@@ -40,7 +42,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 0;               /* ensures it's below your content */
+  z-index: var(--bouncy-index);               /* ensures it's below your content */
   pointer-events: none;     /* allows clicks to go through */
   display: block;
 }
@@ -48,7 +50,7 @@ body {
 header {
   position: relative;
   overflow: hidden;
-  height: 50px;
+  height: 50px;;
 }
 
 .logo-container {
@@ -94,6 +96,7 @@ main {
 
 }
 
+
 .introtext {
   display: inline-flex;
   align-items: center;
@@ -131,9 +134,14 @@ a:hover {
 }
 
 footer {
+  position: relative;
+  z-index: var(--background-index);
   text-align: center;
   padding: 1rem;
   font-size: 0.9rem;
+}
+
+footer h2 {
   color: #ccc;
 }
 
@@ -406,6 +414,10 @@ footer {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+
+  /* place it in the foreground */
+  position: relative;
+  z-index: var(--foreground-index);
 }
 
 .projects-section h2 {
