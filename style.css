@@ -204,7 +204,7 @@ footer h2 {
 .side-menu {
   position: fixed;
   top: 0;
-  right: -350px;
+  right: -351px; /* slightly more off screen for collision weirdness to stop */
   width: 350px;
   height: 100vh;
   background-color: var(--text-light);
