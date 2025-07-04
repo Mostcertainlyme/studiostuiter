@@ -633,7 +633,11 @@ footer h2 {
 .project-details-media img {
   width: 100%;
   border-radius: 10px;
-  margin-bottom: 1rem;
+  gap: 0.5rem;
+}
+
+.project-details-media img:hover {
+  transform: scale(1.05);
 }
 
 
@@ -717,23 +721,25 @@ footer p {
 
 /* Gallery3 styling */
 .gallery3section {
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
+  /* padding-bottom: 3rem; */
 }
 
 .gallery3 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 0.5rem;
-  max-height: 300px;
+  max-height: 600px;
   overflow-y: auto;
-  padding: 0.5rem;
-  background-color: #f9f9f9;
+  /* background-color: red; */
   border-radius: 10px;
+
 }
 
 .gallery3 img {
   width: 100%;
-  height: 120px;
+  height: auto;
+  max-height: 300px;
   object-fit: cover;
   border-radius: 8px;
   transition: transform 0.3s ease;

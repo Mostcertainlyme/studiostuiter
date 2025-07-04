@@ -77,18 +77,65 @@
         <button class="filter-btn active" data-filter="all">Alle</button>
         <button class="filter-btn" data-filter="web">Web Design</button>
         <button class="filter-btn" data-filter="app">App Development</button>
-        <button class="filter-btn" data-filter="branding">Branding</button>
-        <button class="filter-btn" data-filter="3d">3D Design</button>
+        <button class="filter-btn" data-filter="instalation">Interactive Instalations</button>
+        <button class="filter-btn" data-filter="creativecoding">Creative Coding</button>
       </div>
 
       <!-- Projects grid -->
       <div class="projects-grid">
-        <div class="project-card"  data-category="web" onclick="toggleProjectDetails(this)">
+
+          <div class="project-card"  data-category="instalation" onclick="toggleProjectDetails(this)">
           <div class="project-image">
-            <img src="https://via.placeholder.com/300x200/FFA300/FFFFFF?text=Web+Project+1" alt="Web Project 1">
+            <img src="images/projects/Vleugellam/vleugellam4.jpeg" alt="Web Project 1">
           </div>
           <div class="project-info">
-            <h3>Website Redesign</h3>
+            <h3>Vleugellam</h3>
+            <p>Een moderne website met focus op gebruiksvriendelijkheid en responsive design.</p>
+          </div>
+          <div class="project-tags">
+          <span class="tag">HTML/CSS</span>
+          <span class="tag">JavaScript</span>
+        </div>
+          <div class="project-details">
+            <div class="project-details-content">
+              <h3>Website Redesign - Uitgebreide Details</h3>
+              <div class="project-details-grid">
+                <div class="project-details-text">
+                  <h4>Projectomschrijving</h4>
+                  <p>Dit project betrof een complete redesign van een bestaande website met focus op moderne gebruiksvriendelijkheid en responsive design. Het doel was om de gebruikerservaring te verbeteren en de website toegankelijk te maken op alle apparaten.</p>
+                  
+                  <h4>Gebruikte Technologieën</h4>
+                  <ul>
+                    <li>HTML5 & CSS3</li>
+                    <li>JavaScript (ES6+)</li>
+                    <li>Responsive Grid & Flexbox</li>
+                    <li>CSS Animations</li>
+                  </ul>
+                  
+                  <h4>Uitdagingen & Oplossingen</h4>
+                  <p>De grootste uitdaging was het creëren van een naadloze gebruikerservaring op verschillende schermformaten. Dit werd opgelost door gebruik te maken van moderne CSS Grid en Flexbox technieken.</p>
+                </div>
+                <div class="project-details-media">
+                  <img src="images/projects/Vleugellam/vleugellam1.jpeg" alt="Project Details">
+                  <section class="gallery3section">
+                    <div id="gallery3" class="gallery3">
+                        
+                        <img src="images/projects/Vleugellam/vleugellam2.jpeg" loading="lazy"   alt="Afbeelding 7">
+                        <img src="images/projects/Vleugellam/vleugellam3.jpeg" loading="lazy"   alt="Afbeelding 8">
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card"  data-category="web" onclick="toggleProjectDetails(this)">
+          <div class="project-image">
+            <img src="images/projects/Potgrond/potgrond1.png" alt="Web Project 1">
+          </div>
+          <div class="project-info">
+            <h3>Potgrond</h3>
             <p>Een moderne website met focus op gebruiksvriendelijkheid en responsive design.</p>
           </div>
           <div class="project-tags">
@@ -148,10 +195,10 @@
 
         <div class="project-card" data-category="app" onclick="toggleProjectDetails(this)">
           <div class="project-image">
-            <img src="https://via.placeholder.com/300x200/8AB3BB/FFFFFF?text=App+Project+1" alt="App Project 1">
+            <img src="images/projects/Future Botanica/fubo1.jpg" alt="App Project 1">
           </div>
           <div class="project-info">
-            <h3>Mobile App</h3>
+            <h3>Future Botanica</h3>
             <p>Een intuïtieve mobiele applicatie voor dagelijks gebruik met clean interface.</p>
           </div>
           <div class="project-tags">
@@ -185,7 +232,7 @@
           </div>
         </div>
 
-        <div class="project-card" data-category="branding" onclick="toggleProjectDetails(this)">
+        <div class="project-card" data-category="instalation" onclick="toggleProjectDetails(this)">
           <div class="project-image">
             <img src="https://via.placeholder.com/300x200/FF3B30/FFFFFF?text=Brand+Project+1" alt="Brand Project 1">
           </div>
@@ -224,7 +271,7 @@
           </div>
         </div>
 
-        <div class="project-card" data-category="3d" onclick="toggleProjectDetails(this)">
+        <div class="project-card" data-category="creativecoding" onclick="toggleProjectDetails(this)">
           <div class="project-image">
             <img src="https://via.placeholder.com/300x200/800263/FFFFFF?text=3D+Project+1" alt="3D Project 1">
           </div>
