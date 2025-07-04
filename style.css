@@ -459,7 +459,8 @@ footer h2 {
 .filter-btn {
   padding: 0.8rem 1.5rem;
   border: 2px solid var(--accent-color);
-  background-color: transparent;
+  background: rgba(244, 244, 244, 0.85);
+  backdrop-filter: blur(10px);
   color: var(--accent-color);
   border-radius: 25px;
   cursor: pointer;
@@ -489,7 +490,9 @@ footer h2 {
 }
 
 .project-card {
-  background-color: white;
+  background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+  /* background-color: white; */
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
@@ -574,7 +577,10 @@ footer h2 {
 .project-details {
   max-height: 0;
   overflow: hidden;
-  background-color: var(--text-light);
+  /* background-color: var(--text-light); */
+   background: rgba(244, 244, 244, 0.7);
+   /* backdrop-filter: blur(10px); */
+   
   transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
 }
 
