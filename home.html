@@ -692,6 +692,14 @@ window.addEventListener('resize', () => {
       
     });
   });
+    function resizeCanvas() {
+      const canvas = document.getElementById("canvas");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resizeCanvas);
+      window.addEventListener("orientationchange", resizeCanvas);
+      resizeCanvas(); // initial call
   </script>
   </body>
 </html>

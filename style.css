@@ -43,7 +43,7 @@ body {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: auto; /* Let JS handle the height */
   z-index: var(--bouncy-index);               /* ensures it's below your content */
   pointer-events: none;     /* allows clicks to go through */
   display: block;
