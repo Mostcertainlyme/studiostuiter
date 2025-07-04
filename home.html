@@ -615,7 +615,7 @@
 
   <script type="module">
     import BouncyShapesPlayground from './bouncyShapes.js';
-    const spawnSize = Math.max(40, window.innerWidth * 0.14);
+    const spawnSize = Math.max(40, window.innerWidth * 0.10);
 
     /* playground ------------------------------------------------------- */
     const pg = new BouncyShapesPlayground({
@@ -646,14 +646,14 @@
       'solid',                      // color pattern
       true,                         // "shape spawns outside of the frame" flag
       // '#FF3B30'
-      'green',                     // actual colour when using "solid" option
+      'red',                     // actual colour when using "solid" option
     );
 
 
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(() => {
-    const newSize = Math.max(40, window.innerWidth * 0.14);
+    const newSize = Math.max(40, window.innerWidth * 0.10);
     pg.spawnSize = newSize;
     pg.balls.forEach(ball => {
       ball.radius = newSize;
