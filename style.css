@@ -584,8 +584,8 @@ footer h2 {
   background-color: var(--accent-color);
   color: white;
   /* padding: 0.2rem 0.8rem 0.2rem; */
-  padding-top: 0.2rem;
-  padding-bottom: 0.1rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.2rem;
   padding-left: 0.8rem;
   padding-right: 0.8rem;
   border-radius: 12px;
@@ -927,6 +927,7 @@ footer p {
   .tag {
     font-size: 0.7rem;
     padding: 0.2rem 0.6rem;
+    text-align: center;
   }
 
   /* Project details responsive adjustments */
