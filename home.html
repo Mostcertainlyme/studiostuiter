@@ -687,6 +687,19 @@
       enableShadow:true,
     });
 
+    function getCSSVariable(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    const colorOptions = [
+      getCSSVariable('--bg-color'),
+      getCSSVariable('--studio-color'),
+      getCSSVariable('--stuiter-color'),
+      getCSSVariable('--accent-color')
+    ];
+
+    const randomColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+
     // Make sure the following properties exist!
     pg.obstacles = pg.obstacles || [];
     pg.obstacleData = pg.obstacleData || new Map();
@@ -698,7 +711,7 @@
       spawnSize,                          // size in px
       'solid',                      // color pattern
       true,                         // "shape spawns outside of the frame" flag
-      '#FF3B30'                 // actual colour when using "solid" option
+      randomColor,                // actual colour when using "solid" option
     );
 
 
