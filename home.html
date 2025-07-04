@@ -657,36 +657,41 @@ window.addEventListener('resize', () => {
   }, 150); // only updates after 150ms of no resize
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const cards = document.querySelectorAll(".project-card");
+  // dynamic adding of project cards to obstacles when hover over
+  document.addEventListener("DOMContentLoaded", () => {
+    // Only run on screens wider than 768px (or adjust threshold as needed)
+    if (window.innerWidth <= 768) return;
 
-  cards.forEach(card => {
-    card.addEventListener("mouseenter", () => {
-      if (!pg.obstacleData.has(card)) {
-        card.dataset.id = card.dataset.id || `ob-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
-        const rect = card.getBoundingClientRect();
-        const obstacleObj = { el: card, rect, vx: 0, vy: 0 };
-        
-        pg.obstacles.push(obstacleObj);
-        pg.obstacleData.set(card, obstacleObj);
-        console.log(`[DEBUG] Added to obstacles. Total: ${pg.obstacles.length}`);
-      }
-    });
+    const cards = document.querySelectorAll(".project-card");
 
-    card.addEventListener("mouseleave", () => {
-      const obstacleObj = pg.obstacleData.get(card);
-      if (obstacleObj) {
-        const idx = pg.obstacles.indexOf(obstacleObj);
-        if (idx !== -1) {
-          pg.obstacles.splice(idx, 1);
-          console.log(`[DEBUG] Removed from pg.obstacles. Total: ${pg.obstacles.length}`);
+    cards.forEach(card => {
+      card.addEventListener("mouseenter", () => {
+        if (!pg.obstacleData.has(card)) {
+          card.dataset.id = card.dataset.id || `ob-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+          const rect = card.getBoundingClientRect();
+          const obstacleObj = { el: card, rect, vx: 0, vy: 0 };
+
+          pg.obstacles.push(obstacleObj);
+          pg.obstacleData.set(card, obstacleObj);
+          console.log(`[DEBUG] Added to obstacles. Total: ${pg.obstacles.length}`);
         }
-        const deleted = pg.obstacleData.delete(card);
-        console.log(`[DEBUG] Removed from pg.obstacleData:`, deleted);
-      }
+      });
+
+      card.addEventListener("mouseleave", () => {
+        const obstacleObj = pg.obstacleData.get(card);
+        if (obstacleObj) {
+          const idx = pg.obstacles.indexOf(obstacleObj);
+          if (idx !== -1) {
+            pg.obstacles.splice(idx, 1);
+            console.log(`[DEBUG] Removed from pg.obstacles. Total: ${pg.obstacles.length}`);
+          }
+          const deleted = pg.obstacleData.delete(card);
+          console.log(`[DEBUG] Removed from pg.obstacleData:`, deleted);
+        }
+      });
+      
     });
   });
-});
   </script>
   </body>
 </html>
