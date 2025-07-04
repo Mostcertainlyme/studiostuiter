@@ -471,20 +471,25 @@
       </div>
     </div>
   </section>
+      <!-- Scroll up arrow -->
+    <div class="scroll-up-wrapper">
+      <button class="scroll-up-arrow" onclick="scrollToIntro()">
+        <svg class="arrow-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+        </svg>
+      </button>
 
   <footer class ="obstacle">
     <h2>Stuiter mij omhoog</h2>
     <p>© 2025 Studio Stuiter</p>
     
-    <!-- Scroll up arrow -->
-    <button class="scroll-up-arrow" onclick="scrollToIntro()">
-      <svg class="arrow-icon" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
-      </svg>
-    </button>
+
   </footer>
 
   <script>
+    document.querySelector('.scroll-up-arrow').addEventListener('click', () => {
+  console.log('[DEBUG] Scroll up arrow clicked');
+});
     function toggleSideMenu() {
       const sideMenu = document.getElementById('sideMenu');
       const menuOverlay = document.getElementById('menuOverlay');
