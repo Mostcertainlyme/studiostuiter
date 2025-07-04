@@ -519,6 +519,10 @@ footer h2 {
   object-fit: cover;
   transition: transform 0.3s ease;
 }
+.top-center-focus {
+  object-fit: contain;
+
+}
 
 .project-card:hover .project-image img {
   transform: scale(1.05);
@@ -550,7 +554,7 @@ footer h2 {
   gap: 0.5rem;
   flex-wrap: wrap;
   padding: 1rem;
-  margin-top: auto;
+ 
 }
 
 .tag {
