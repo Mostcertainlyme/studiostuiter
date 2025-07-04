@@ -59,15 +59,11 @@
 
   <main>
     <section class="intro">
-      <br>
-      <br>
-     <section class="introtext"> 
       <img src="images/logo/Asset 6@4x.png" alt="Studio Stuiter logo" class="logo">
+
        <p><span><b>DAAN HOBBEL</b> - <i>DESIGNER & DEVELOPER</i></span>
        <br>Creativiteit die stuitert van je scherm! Wij ontwerpen met energie, plezier en impact.</p>
      </section>
-     
-    </section>
 
   </main>
 
@@ -615,7 +611,7 @@
 
   <script type="module">
     import BouncyShapesPlayground from './bouncyShapes.js';
-    const spawnSize = Math.max(40, window.innerWidth * 0.10);
+    const spawnSize = Math.max(40, window.innerWidth * 0.05);
 
     /* playground ------------------------------------------------------- */
     const pg = new BouncyShapesPlayground({
@@ -624,7 +620,7 @@
       bounceFactor:0.9,         // set bounceFactor this is how much velocity the shape loses everytime it bounces (1 is perfect forever bounce)
       inertiaFactor:0.5,        // how much moving the window around affects the ball momentum
       clickBoost:50,            // how much force gets applied to the shape if clicked on
-      spawnSize: spawnSize,            // how big the spawned shapes should be
+      spawnSize: 120,            // how big the spawned shapes should be
       enableCollision:false,     // flag to enable shape to shape collision
       clickSpawn:false,          // flag to enable shape spawning wherever you click in the canvas
       enableMotion:true,        // flag to enable motion sensors on mobile to affect shape momentum
@@ -642,7 +638,7 @@
       pg.spawnSize,                 // off-screen X
       -pg.spawnSize*3,              // off-screen Y
       'circle',                     // shape
-      120,                          // size in px
+      spawnSize,                          // size in px
       'solid',                      // color pattern
       true,                         // "shape spawns outside of the frame" flag
       // '#FF3B30'
@@ -653,7 +649,7 @@
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(() => {
-    const newSize = Math.max(40, window.innerWidth * 0.10);
+    const newSize = Math.max(40, window.innerWidth * 0.05);
     pg.spawnSize = newSize;
     pg.balls.forEach(ball => {
       ball.radius = newSize;

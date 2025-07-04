@@ -62,8 +62,16 @@ header {
 .logo {
   height: 180px;
   width: auto;
-  padding-right: 10rem;
+  padding-right: 0;
 }
+@media (min-width: 768px) {
+  .logo {
+    height: 180px;
+    width: auto;
+    padding-right: 10rem;
+  }
+}
+
 
 h3 {
   font-family: 'ruddy-regular';
@@ -87,24 +95,34 @@ h1 {
 
 main {
   max-width: 1000px;
-  transform: translateY(38.2%);
   margin: 0 auto;
 }
 
-.title{
-    padding-right: 5rem;
 
+.intro{
+  display: inline-flex;
+  transform: translateY(35%);
+  align-items:center;
 }
 
 
-.introtext {
-  display: inline-flex;
-  align-items: center;
+
+@media (max-width: 768px) {
+  .intro {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 0.3rem;
+    text-align: center;
+    transform: translateY(20%);
+  }
 }
 
 
 .introtext span {
   font-family: 'ruddy-regular';
+
 }
 
 
