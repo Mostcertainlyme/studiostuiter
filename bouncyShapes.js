@@ -23,9 +23,12 @@ export default class BouncyShapesPlayground {
       clickBoost        = 40,
       spawnSize         = 100,
       pattern           = 'random',
+      enableShadow = false,   // shapes have a shadow 
       clickSpawn        = true,
       enableMotion     = true,     // ← set false if you don’t want it
       motionFactor      = 1.0,      // tune overall strength
+      
+     
       
     } = opts;
 
@@ -40,11 +43,12 @@ export default class BouncyShapesPlayground {
     Object.assign(this, {
       gravity, bounceFactor, clickBoost, spawnSize,
       selectedPattern: pattern, shapeOptions,
-      enableCollision, clickSpawn, inertiaFactor,motionFactor, enableMotion,
+      enableCollision, clickSpawn, inertiaFactor,motionFactor, enableMotion,  enableShadow,
     });
 
     /* State ----------------------------------------------------------- */
     this.balls = [];
+    this.obstacles = [];
     this.MAX_ANGULAR_SPEED = 0.2;
 
     /* NEW — track viewport‑scroll momentum */
@@ -106,17 +110,25 @@ export default class BouncyShapesPlayground {
     this.canvas.height = window.innerHeight;
   }
 
-  /* Collect all current .obstacle elements */
+  /* Merge static .obstacle elements into existing obstacle list */
   _initObstacles() {
-    this.obstacles = Array.from(document.querySelectorAll('.obstacle')).map(el => {
+    const staticEls = document.querySelectorAll('.obstacle');
+
+    for (const el of staticEls) {
+      // Skip if this element is already in the obstacle list
+      const alreadyTracked = this.obstacles.some(ob => ob.el === el);
+      if (alreadyTracked) continue;
+
       const rect = el.getBoundingClientRect();
-      return { el, rect, vx: 0, vy: 0 }; // vx/vy in DOM‑pixels per frame
-    });
+      const newObstacle = { el, rect, vx: 0, vy: 0 };
+      this.obstacles.push(newObstacle);
+    }
   }
 
   /* Update each obstacle's velocity by differencing successive rects */
   _updateObstacleMotion() {
     for (const ob of this.obstacles) {
+      if (!ob.el || !ob.el.getBoundingClientRect) return;
       const newRect = ob.el.getBoundingClientRect();
       ob.vx   = newRect.left - ob.rect.left;
       ob.vy   = newRect.top  - ob.rect.top;
@@ -125,17 +137,30 @@ export default class BouncyShapesPlayground {
   }
 
   _handleCanvasClick(e) {
-    const x = e.clientX, y = e.clientY + window.scrollY;
+    const x = e.clientX, y = e.clientY;
     if (this._bounceHit(x, y)) return;
     if (this.clickSpawn) this.spawn(x, y);
   }
 
   _bounceHit(x, y) {
     for (const b of this.balls) {
-      if (Math.hypot(x - b.x, y - b.y) < b.radius) {
-        b.vy = -this.clickBoost;
-        b.vx += (Math.random() - 0.5) * 8;
-        b.angularVelocity += (Math.random() - 0.5) * 0.2;
+      const dx = b.x - x;
+      const dy = b.y - y;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist < b.radius) {
+        const mag = Math.max(dist, 1); // avoid division by zero
+        const nx = dx / mag;
+        const ny = dy / mag;
+
+        // Apply boost away from click point
+        const boost = this.clickBoost;
+        b.vx += nx * boost;
+        b.vy += ny * boost;
+
+        // Add spin depending on lateral offset
+        b.angularVelocity += (Math.random() - 0.5) * 0.4;
+
         return true;
       }
     }
@@ -217,10 +242,9 @@ _animate () {
    * -----------------------------------------------------------------*/
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-  /* Refresh obstacle list if the DOM changed size/contents */
-  if (document.querySelectorAll('.obstacle').length !== this.obstacles.length) {
-    this._initObstacles();
-  }
+  // Always try to merge in new .obstacle elements, but don't remove existing ones
+  this._initObstacles();  
+  
   /* Measure obstacle velocities BEFORE balls are updated */
   this._updateObstacleMotion();
 
@@ -285,6 +309,7 @@ class Ball {
     this.angle = Math.random() * Math.PI * 2;
     this.angularVelocity = (Math.random() - 0.5) * 0.2;
     this.ignoreEdgesUntilVisible = outside;
+    this.touchedObstacles = new Set();
   }
 
   update() {
@@ -356,8 +381,16 @@ class Ball {
     ctx.save();
     ctx.translate(this.x, this.y);
     ctx.rotate(this.angle);
-    ctx.beginPath();
 
+    // apply shadow is enabled
+    if (this.pg.enableShadow) {
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+      ctx.shadowBlur = 10;
+      ctx.shadowOffsetX = 3;
+      ctx.shadowOffsetY = 3;
+    }
+
+    ctx.beginPath();
     switch(this.shape){
       case 'circle':   ctx.arc(0, 0, this.radius, 0, Math.PI * 2);                 break;
       case 'square':   ctx.rect(-this.radius, -this.radius, this.radius*2, this.radius*2); break;
@@ -404,34 +437,81 @@ function checkObstacleCollision(ball, ob) {
   const cy = Math.max(dRect.top,  Math.min(sy, dRect.bottom));
 
   const dx = sx - cx, dy = sy - cy, dist = Math.hypot(dx, dy);
-  if (dist >= ball.radius || dist === 0) return;
 
-  /* normal out of obstacle */
-  const nx = dx / dist, ny = dy / dist;
+  // ─────────────────────────────────────────────────────
+  // 1. Handle case where ball is fully inside an obstacle
+  // ─────────────────────────────────────────────────────
+  if (dist >= ball.radius || dist === 0) {
+    const insideX = sx > dRect.left && sx < dRect.right;
+    const insideY = sy > dRect.top  && sy < dRect.bottom;
 
-  /* separate the ball */
+    const id = ob.el.dataset?.id || ob.el; // Use dataset ID if available
+
+    if (insideX && insideY && !ball.touchedObstacles.has(id)) {
+      // Give the ball a random kick out
+      const angle = Math.random() * 2 * Math.PI;
+      const force = 10 + Math.random() * 10;
+
+      ball.vx += Math.cos(angle) * force;
+      ball.vy += Math.sin(angle) * force;
+
+      // Add some spin
+      ball.angularVelocity += (Math.random() - 0.5) * 0.5;
+
+      // Mark obstacle as touched
+      ball.touchedObstacles.add(id);
+    }
+
+    return; // Skip further collision logic
+  }
+
+  // ─────────────────────────────────────────────────────
+  // 2. Normal collision response if ball overlaps edge
+  // ─────────────────────────────────────────────────────
+  const nx = dx / dist;
+  const ny = dy / dist;
+
   const overlap = ball.radius - dist;
-  const scaleX  = ball.pg.canvas.width  / cRect.width;
-  const scaleY  = ball.pg.canvas.height / cRect.height;
+  const scaleX = ball.pg.canvas.width  / cRect.width;
+  const scaleY = ball.pg.canvas.height / cRect.height;
+
   ball.x += nx * overlap * scaleX;
   ball.y += ny * overlap * scaleY;
 
-  /* reflect velocity */
   const dot = ball.vx * nx + ball.vy * ny;
   ball.vx -= 2 * dot * nx;
   ball.vy -= 2 * dot * ny;
 
-  /* base bounce damping */
   ball.vx *= ball.pg.bounceFactor;
   ball.vy *= ball.pg.bounceFactor;
 
-  /* ───────── Transfer obstacle momentum ───────── */
-  const obVxCanvas = ob.vx * scaleX; // convert DOM‑px/frame to canvas units
+  const obVxCanvas = ob.vx * scaleX;
   const obVyCanvas = ob.vy * scaleY;
   ball.vx += obVxCanvas;
   ball.vy += obVyCanvas;
-}
 
+  // ─────────────────────────────────────────────────────
+  // 3. Clean up: if ball is not inside ANY obstacle, reset touchedObstacles
+  // ─────────────────────────────────────────────────────
+  let isInsideAny = false;
+  for (const other of ball.pg.obstacles) {
+    const rect = other.rect;
+    const sxCheck = cRect.left + (ball.x / ball.pg.canvas.width)  * cRect.width;
+    const syCheck = cRect.top  + (ball.y / ball.pg.canvas.height) * cRect.height;
+
+    const inX = sxCheck > rect.left && sxCheck < rect.right;
+    const inY = syCheck > rect.top  && syCheck < rect.bottom;
+
+    if (inX && inY) {
+      isInsideAny = true;
+      break;
+    }
+  }
+
+  if (!isInsideAny) {
+    ball.touchedObstacles.clear(); // ✅ Allow new reactions in the future
+  }
+}
 
 
 /*──────── helper: draw star ───────*/

@@ -630,6 +630,7 @@
       motionFactor:0.8,         // factor to control how much motion gets applied to shape momentum 
       pattern:['random','progress','solid'],                  // available color patterns for the shape
       shapeOptions:['circle','square','triangle','star'],     // diff
+      enableShadow:true,
     });
 
     // Make sure the following properties exist!
@@ -651,27 +652,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cards.forEach(card => {
     card.addEventListener("mouseenter", () => {
-      console.log(`[DEBUG] Mouse entered card:`, card);
-      console.log("[DEBUG] obstacleData already has this card?", pg.obstacleData.has(card));
-
       if (!pg.obstacleData.has(card)) {
-        pg.obstacles.push(card);
-        pg.obstacleData.set(card, { lastX: null, vx: 0 });
+        card.dataset.id = card.dataset.id || `ob-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+        const rect = card.getBoundingClientRect();
+        const obstacleObj = { el: card, rect, vx: 0, vy: 0 };
+        
+        pg.obstacles.push(obstacleObj);
+        pg.obstacleData.set(card, obstacleObj);
         console.log(`[DEBUG] Added to obstacles. Total: ${pg.obstacles.length}`);
       }
     });
 
     card.addEventListener("mouseleave", () => {
-      console.log(`[DEBUG] Mouse left card:`, card);
-
-      const idx = pg.obstacles.indexOf(card);
-      if (idx !== -1) {
-        pg.obstacles.splice(idx, 1);
-        console.log(`[DEBUG] Removed from pg.obstacles`);
+      const obstacleObj = pg.obstacleData.get(card);
+      if (obstacleObj) {
+        const idx = pg.obstacles.indexOf(obstacleObj);
+        if (idx !== -1) {
+          pg.obstacles.splice(idx, 1);
+          console.log(`[DEBUG] Removed from pg.obstacles. Total: ${pg.obstacles.length}`);
+        }
+        const deleted = pg.obstacleData.delete(card);
+        console.log(`[DEBUG] Removed from pg.obstacleData:`, deleted);
       }
-
-      const deleted = pg.obstacleData.delete(card);
-      console.log(`[DEBUG] Removed from pg.obstacleData:`, deleted);
     });
   });
 });
