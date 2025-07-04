@@ -615,6 +615,7 @@
 
   <script type="module">
     import BouncyShapesPlayground from './bouncyShapes.js';
+    const spawnSize = Math.max(40, window.innerWidth * 0.07);
 
     /* playground ------------------------------------------------------- */
     const pg = new BouncyShapesPlayground({
@@ -623,7 +624,7 @@
       bounceFactor:0.9,         // set bounceFactor this is how much velocity the shape loses everytime it bounces (1 is perfect forever bounce)
       inertiaFactor:0.5,        // how much moving the window around affects the ball momentum
       clickBoost:50,            // how much force gets applied to the shape if clicked on
-      spawnSize:120,            // how big the spawned shapes should be
+      spawnSize: spawnSize,            // how big the spawned shapes should be
       enableCollision:false,     // flag to enable shape to shape collision
       clickSpawn:false,          // flag to enable shape spawning wherever you click in the canvas
       enableMotion:true,        // flag to enable motion sensors on mobile to affect shape momentum

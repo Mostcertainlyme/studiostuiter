@@ -447,20 +447,55 @@ function checkObstacleCollision(ball, ob) {
 
     const id = ob.el.dataset?.id || ob.el; // Use dataset ID if available
 
-    if (insideX && insideY && !ball.touchedObstacles.has(id)) {
-      // Give the ball a random kick out
-      const angle = Math.random() * 2 * Math.PI;
-      const force = 10 + Math.random() * 10;
+  if (insideX && insideY && !ball.touchedObstacles.has(id)) {
+    // Determine depth of embedment (normalized 0–1)
+    const xDepth = Math.min(
+      (sx - dRect.left) / dRect.width,
+      (dRect.right - sx) / dRect.width
+    );
+    const yDepth = Math.min(
+      (sy - dRect.top) / dRect.height,
+      (dRect.bottom - sy) / dRect.height
+    );
+    const embedDepth = 1 - Math.min(xDepth, yDepth); // 0 = edge, 1 = deep center
 
-      ball.vx += Math.cos(angle) * force;
-      ball.vy += Math.sin(angle) * force;
+    // Determine screen-farthest direction
+    const screenW = window.innerWidth;
+    const screenH = window.innerHeight;
 
-      // Add some spin
-      ball.angularVelocity += (Math.random() - 0.5) * 0.5;
+    const cx = ball.x;
+    const cy = ball.y;
 
-      // Mark obstacle as touched
-      ball.touchedObstacles.add(id);
+    // Choose direction vector toward farthest edge
+    const leftDist   = cx;
+    const rightDist  = screenW - cx;
+    const topDist    = cy;
+    const bottomDist = screenH - cy;
+
+    let dirX = 0, dirY = 0;
+
+    const maxDist = Math.max(leftDist, rightDist, topDist, bottomDist);
+    switch (maxDist) {
+      case leftDist:   dirX = -1; break;
+      case rightDist:  dirX =  1; break;
+      case topDist:    dirY = -1; break;
+      case bottomDist: dirY =  1; break;
     }
+
+    // Final force scale (tweakable)
+    const baseForce = 12;
+    const force = baseForce * embedDepth;
+
+    ball.vx += dirX * force;
+    ball.vy += dirY * force;
+
+    // Add spin for flavor
+    ball.angularVelocity += (Math.random() - 0.5) * 0.6;
+
+    // Remember we already reacted
+    ball.touchedObstacles.add(id);
+  }
+
 
     return; // Skip further collision logic
   }
