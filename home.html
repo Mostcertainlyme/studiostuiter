@@ -1,3 +1,26 @@
+<!-- Current problems -->
+ <!-- 
+  - No pictures in project details are being shown
+  - Menu cuts off at the bottom on mobile
+  - on ios safari i cant touch the ball to bounce
+  - dynamice obstable bouncing can be improved when in obstacle
+ -->
+
+<!-- TODO -->
+ <!-- 
+  - Implement Video player for certain detail media
+  - figure out best filter catgories (based on media or on design category)
+  - Implement bounce menu
+  - Finish Email form functionality
+  - What should the email form be about?
+  - Create profile picture thing
+  - Figure out what should be the actual content of the project detail
+  - Multiple languages?
+  - Content mangement system?
+ -->
+
+
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -18,6 +41,30 @@
       <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
     </svg>
   </button>
+<!-- Bouncy Ball Icon with Upward Shift -->
+<button class="bouncy-btn" onclick="toggleSideMenu()">
+  <svg class="menu-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+    
+    <!-- Shifted bounce arc -->
+    <path d="M20 68 C35 20, 65 20, 70 35" 
+          stroke="white" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+    <!-- Bigger, higher ball -->
+    <circle cx="80" cy="55" r="14" fill="white" stroke="#f4a300" stroke-width="0.1"/>
+
+    <!-- Shine -->
+    <circle cx="76" cy="51" r="3" fill="#fff" opacity="0.7"/>
+
+    <!-- Bounce spark (now higher) -->
+    <path d="M18 68 l-3 3 M18 68 l3 3" stroke="white" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Optional motion ticks -->
+    <path d="M87 49 l3 -3 M87 61 l3 3" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+</button>
+
+
+
 
   <!-- Side menu -->
   <div id="sideMenu" class="side-menu obstacle">

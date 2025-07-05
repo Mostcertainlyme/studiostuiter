@@ -211,6 +211,30 @@ footer h2 {
   justify-content: center;
   z-index: 1000;
 }
+.bouncy-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--studio-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px #32323250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.bouncy-btn .menu-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--text-light);
+}
+
 
 .menu-btn:hover {
   transform: scale(1.01);
@@ -218,7 +242,18 @@ footer h2 {
   box-shadow: 0 6px 20px #3232327d;
 }
 
+.bouncy-btn:hover {
+  transform: scale(1.01);
+  background-color: var(--studio-color);
+  box-shadow: 0 6px 20px #3232327d;
+}
+
+
 .menu-btn:active {
+  transform: scale(0.95);
+}
+
+.bouncy-btn:active {
   transform: scale(0.95);
 }
 
@@ -834,6 +869,12 @@ footer p {
     height: 50px;
     top: 15px;
     right: 15px;
+  }
+    .bouncy-btn {
+    width: 50px;
+    height: 50px;
+    top: 15px;
+    left: 15px;
   }
 
   .menu-icon {
