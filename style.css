@@ -114,7 +114,7 @@ main {
 .intro img.logo {
   margin: 0;
   padding: 0;
-  max-width: 300px; /* control image size */
+  max-width: 85vw; /* control image size */
   height: auto;
   display: block;
 }
@@ -131,8 +131,8 @@ main {
     display: flex;
     align-items: center;
     flex-direction: column;
-    flex-wrap: wrap;
-    padding: 2.3rem;
+    flex-wrap:nowrap;
+    padding: 2rem;
     gap:1rem;
     text-align: left;
     transform: translateY(0%);
