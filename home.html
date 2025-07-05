@@ -874,7 +874,6 @@
       getCSSVariable('--accent-color')
     ];
     const randomColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
-
     // Spawn one shape at start
     pg.spawn(
       pg.spawnSize,
@@ -906,6 +905,41 @@
       pg.balls.forEach(ball => ball.radius = val);
       document.getElementById("sizeValue").textContent = val;
     });
+
+    pg.obstacles = pg.obstacles || [];
+    pg.obstacleData = pg.obstacleData || new Map();
+
+    // Add obstacles from project cards on desktop
+    if (window.innerWidth > 768) {
+      const cards = document.querySelectorAll(".project-card");
+
+      cards.forEach(card => {
+        card.addEventListener("mouseenter", () => {
+          if (!pg.obstacleData.has(card)) {
+            card.dataset.id = card.dataset.id || `ob-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+            const rect = card.getBoundingClientRect();
+            const obstacleObj = { el: card, rect, vx: 0, vy: 0 };
+
+            pg.obstacles.push(obstacleObj);
+            pg.obstacleData.set(card, obstacleObj);
+            console.log(`[Obstacle] Added: ${card.dataset.id}`);
+          }
+        });
+
+        card.addEventListener("mouseleave", () => {
+          const obstacleObj = pg.obstacleData.get(card);
+          if (obstacleObj) {
+            const idx = pg.obstacles.indexOf(obstacleObj);
+            if (idx !== -1) {
+              pg.obstacles.splice(idx, 1);
+              console.log(`[Obstacle] Removed: ${card.dataset.id}`);
+            }
+            pg.obstacleData.delete(card);
+          }
+        });
+      });
+    }
+
 
 
     // Reset button
