@@ -478,7 +478,6 @@ footer h2 {
   z-index: 3;
   font-weight: bold;
   color: black;
-  pointer-events: none;
   font-family: 'colfax-regular', sans-serif;;
 }
 /* Actual slider */
