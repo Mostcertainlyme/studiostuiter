@@ -428,12 +428,11 @@ footer h2 {
 
 .bouncy-menu label {
   display: block;
-  margin-bottom: 1rem;
   font-size: 0.95rem;
 }
 
 .bouncy-menu select,
-.bouncy-menu input[type="range"],
+/* .bouncy-menu input[type="range"], */
 .bouncy-menu input[type="checkbox"] {
   margin-top: 0.3rem;
   width: 100%;
@@ -445,9 +444,98 @@ footer h2 {
   color: #333;
 }
 
+.slider-wrapper {
+  position: relative;
+  height: 48px;
+  border-radius: 30px;
+  background-color: #e0e0e0;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+/* Fill layer behind thumb */
+.slider-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: var(--accent-color);
+  border-radius: inherit;
+  z-index: 1;
+  pointer-events: none;
+  transition: width 0.3s ease;
+  
+}
+
+/* Text on top of slider */
+.slider-label {
+  position: relative;
+  left: 0;
+
+  
+  width: 100%;
+  text-align: center;
+  line-height: 48px;
+  z-index: 3;
+  font-weight: bold;
+  color: black;
+  pointer-events: none;
+  font-family: 'colfax-regular', sans-serif;;
+}
+/* Actual slider */
+.styled-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 48px;
+  background: transparent;
+  margin: 0;
+}
+
+/* WebKit Thumb */
+.styled-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 36px;
+  height: 36px;
+  background: var(--studio-color);
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  margin-top: 6px;
+  cursor: pointer;
+}
+
+/* WebKit Track */
+.styled-slider::-webkit-slider-runnable-track {
+  height: 48px;
+  background: transparent;
+  border-radius: 30px;
+}
+
+/* Firefox Thumb */
+.styled-slider::-moz-range-thumb {
+  width: 36px;
+  height: 36px;
+  background: var(--studio-color);
+  border-radius: 50%;
+  border: 3px solid white;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+/* Firefox Track */
+.styled-slider::-moz-range-track {
+  height: 48px;
+  background: transparent;
+  border-radius: 30px;
+}
+
 .bouncy-menu input[type="range"] {
   accent-color: var(--accent-color);
 }
+
 .bouncy-menu #chaosButton,
 .bouncy-menu #clearButton,
 .bouncy-menu #resetButton {

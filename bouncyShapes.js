@@ -666,7 +666,7 @@ export function setupBouncyControls(pg) {
         for (let i = 0; i < howMany; i++) {
           const x = Math.random() * window.innerWidth;
           const y = -Math.random() * 500;
-          const size = pg.size || pg.spawnSize; // fallback to spawnSize
+          const size = pg.spawnSize; // fallback to spawnSize
           const shape = shapes[Math.floor(Math.random() * shapes.length)];
           const pattern = patterns[Math.floor(Math.random() * patterns.length)];
           const color = `hsl(${Math.random() * 360}, 70%, 60%)`;
@@ -681,6 +681,7 @@ export function setupBouncyControls(pg) {
             pattern === "solid" ? color : undefined
           );
         }
+        console.log(`[DEBUG] Spawned ${howMany} chaotic shapes.`);
       }, 300); // ⏱ Adjust delay if needed
     });
   }

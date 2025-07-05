@@ -91,18 +91,11 @@
   </div>
 
     <!-- Bouncy Ball Side Menu -->
+<!-- Bouncy Ball Side Menu -->
 <div id="bouncyMenu" class="bouncy-menu obstacle">
   <button class="close-menu-btn" onclick="toggleBouncyMenu()">&times;</button>
   <div class="menu-content">
     <h3>Stuiter instellingen</h3>
-
-    <!-- <fieldset>
-        <legend>Spawn Shapes:</legend>
-        <label><input type="checkbox" class="shapeOption" value="circle" checked> Circle</label>
-        <label><input type="checkbox" class="shapeOption" value="square"> Square</label>
-        <label><input type="checkbox" class="shapeOption" value="triangle"> Triangle</label>
-        <label><input type="checkbox" class="shapeOption" value="star"> Star</label>
-    </fieldset> -->
 
     <label id="patternSelectOption">
       Kleur:
@@ -112,39 +105,83 @@
       </select>
     </label>
 
-    <label id="gravityValueOption">
-      Zwaartekracht:
-      <input type="range" id="gravitySlider" min="0" max="2" step="0.1" value="0.1">
+    <!-- Gravity Slider -->
+    <label id="gravityLabel" class="slider-label">Zwaartekracht</label>
+    <div class="slider-wrapper">
+      <div class="slider-fill" id="gravityFill"></div>
+      <input
+        type="range"
+        id="gravitySlider"
+        class="styled-slider"
+        min="0"
+        max="2"
+        step="0.1"
+        value="1.0"
+      />
       <span id="gravityValue">1.0</span>
-    </label>
+    </div>
 
-    <label id="bouncinessValueOption">
-      Stuiterkracht:
-      <input type="range" id="bouncinessSlider" min="0" max="1" step="0.01" value="0.98">
+    <!-- Bounciness Slider -->
+    <label id="bouncinessLabel" class="slider-label">Stuiterkracht</label>
+    <div class="slider-wrapper">
+      <div class="slider-fill" id="bouncinessFill"></div>
+      <input
+        type="range"
+        id="bouncinessSlider"
+        class="styled-slider"
+        min="0"
+        max="1"
+        step="0.01"
+        value="0.98"
+      />
       <span id="bouncinessValue">0.98</span>
-    </label>
+    </div>
 
-    <label id="boostValueOption">
-      klik boost:
-      <input type="range" id="clickBoostSlider" min="0" max="50" step="1" value="40">
+    <!-- Click Boost Slider -->
+    <label id="boostLabel" class="slider-label">Klik boost</label>
+    <div class="slider-wrapper">
+      <div class="slider-fill" id="clickBoostFill"></div>
+      <input
+        type="range"
+        id="clickBoostSlider"
+        class="styled-slider"
+        min="0"
+        max="50"
+        step="1"
+        value="40"
+      />
       <span id="boostValue">40</span>
-    </label>
+    </div>
 
-    <label id="sizeValueOption">
-      Groote:
-      <input type="range" id="sizeSlider" min="5" max="200" step="1" value="100">
+    <!-- Size Slider -->
+    <label id="sizeLabel" class="slider-label">Grootte</label>
+    <div class="slider-wrapper">
+      <div class="slider-fill" id="sizeFill"></div>
+      <input
+        type="range"
+        id="sizeSlider"
+        class="styled-slider"
+        min="5"
+        max="200"
+        step="1"
+        value="100"
+      />
       <span id="sizeValue">100</span>
-    </label>
+    </div>
 
+    <!-- Collision Toggle -->
     <label id="collisionToggleOption">
-      ballen kunnen botsen:
+      Ballen kunnen botsen:
       <input type="checkbox" id="collisionToggle">
     </label>
+
+    <!-- Action Buttons -->
     <button id="chaosButton">Chaos!</button>
     <button id="clearButton">Clear Shapes</button>
     <button id="resetButton">Reset</button>
   </div>
 </div>
+
 
 
   <!-- Menu overlay -->
@@ -631,6 +668,8 @@
       }
     });
 
+
+
     // Scroll to projects section
     function scrollToProjects() {
       document.getElementById('projects').scrollIntoView({
@@ -783,12 +822,34 @@
   </script>
 
 <script type="module">
-  import BouncyShapesPlayground, { setupBouncyControls } from './bouncyShapes.js';
+  import BouncyShapesPlayground, { setupBouncyControls } from './bouncyShapes.js'
+
+  let pg; // Define globally so it's accessible in all functions
+
+  function setupSliderFill(sliderId, fillId, onUpdate) {
+    const slider = document.getElementById(sliderId);
+    const fill = fillId ? document.getElementById(fillId) : null;
+
+    function update() {
+      const percent = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+      if (fill) fill.style.width = `${percent}%`;
+      if (onUpdate) onUpdate(parseFloat(slider.value));
+    }
+
+    slider.addEventListener('input', update);
+    update(); // Initial fill
+  }
+
+  function getCSSVariable(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
 
   window.addEventListener('DOMContentLoaded', () => {
     const spawnSize = Math.max(40, window.innerWidth * 0.05);
+    document.getElementById("sizeSlider").value = spawnSize;
+    document.getElementById("sizeValue").textContent = spawnSize;
 
-    const pg = new BouncyShapesPlayground({
+    pg = new BouncyShapesPlayground({
       canvas: '#canvas',
       gravity: 1.0,
       bounceFactor: 0.9,
@@ -803,29 +864,7 @@
       shapeOptions: ['circle', 'square', 'triangle', 'star'],
       enableShadow: true,
     });
-
-    setupBouncyControls(pg);
-
-    // After pg is created and bouncy Controls are setup sync the menu to its current values
-    document.getElementById("gravitySlider").value = pg.gravity;
-    document.getElementById("gravityValue").textContent = pg.gravity.toFixed(1);
-
-    document.getElementById("bouncinessSlider").value = pg.bounceFactor;
-    document.getElementById("bouncinessValue").textContent = pg.bounceFactor.toFixed(2);
-
-    document.getElementById("clickBoostSlider").value = pg.clickBoost;
-    document.getElementById("boostValue").textContent = pg.clickBoost;
-
-    document.getElementById("sizeSlider").value = pg.spawnSize;
-    document.getElementById("sizeValue").textContent = pg.spawnSize;
-
-    document.getElementById("collisionToggle").checked = pg.enableCollision;
-
-    document.getElementById("patternSelect").value = Array.isArray(pg.pattern) ? pg.pattern[0] : pg.pattern;
-
-    function getCSSVariable(name) {
-      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    }
+    setupBouncyControls(pg); 
 
     const colorOptions = [
       getCSSVariable('--bg-color'),
@@ -833,13 +872,9 @@
       getCSSVariable('--stuiter-color'),
       getCSSVariable('--accent-color')
     ];
-
     const randomColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
 
-    pg.obstacles = pg.obstacles || [];
-    pg.obstacleData = pg.obstacleData || new Map();
-
-    // Example spawn
+    // Spawn one shape at start
     pg.spawn(
       pg.spawnSize,
       -pg.spawnSize * 3,
@@ -850,110 +885,65 @@
       randomColor
     );
 
-document.getElementById("resetButton").addEventListener("click", () => {
-  // 1. Clear all shapes
-  pg.clear();
-
-  // 2. Close the menu
-  document.getElementById("bouncyMenu").classList.remove("open");
-  document.getElementById("menuOverlay")?.classList.remove("active");
-
-  // 3. Reset sliders and their displayed values
-  const gravity = 1.0;
-  const bounce = 0.9;
-  const boost = 50;
-  const pattern = "random";
-  const enableCollision = false;
-  const size = Math.max(40, window.innerWidth * 0.05);
-
-  // Set slider values
-  document.getElementById("gravitySlider").value = gravity;
-  document.getElementById("bouncinessSlider").value = bounce;
-  document.getElementById("clickBoostSlider").value = boost;
-  document.getElementById("patternSelect").value = pattern;
-  document.getElementById("collisionToggle").checked = enableCollision;
-  document.getElementById("sizeSlider").value = size;
-
-  // Set UI readouts
-  document.getElementById("gravityValue").textContent = gravity.toFixed(1);
-  document.getElementById("bouncinessValue").textContent = bounce.toFixed(2);
-  document.getElementById("boostValue").textContent = boost;
-  document.getElementById("sizeValue").textContent = size;
-
-  // ✅ Actually update the playground state
-  pg.gravity = gravity;
-  pg.bounceFactor = bounce;
-  pg.clickBoost = boost;
-  pg.pattern = pattern;
-  pg.enableCollision = enableCollision;
-  pg.spawnSize = size;
-
-  // 4. Delay before respawning the shape
-  setTimeout(() => {
-    const colorOptions = [
-      getCSSVariable('--bg-color'),
-      getCSSVariable('--studio-color'),
-      getCSSVariable('--stuiter-color'),
-      getCSSVariable('--accent-color')
-    ];
-    const randomColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
-
-    pg.spawn(
-      pg.spawnSize,
-      -pg.spawnSize * 3,
-      'circle',
-      pg.spawnSize,
-      'solid',
-      true,
-      randomColor
-    );
-  }, 350);
-});
-
-  
-
-
-
-    // Resize handler for dynamic scaling
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        const newSize = Math.max(40, window.innerWidth * 0.05);
-        pg.spawnSize = newSize;
-        pg.balls.forEach(ball => {
-          ball.radius = newSize;
-        });
-      }, 150);
+    // Gravity slider
+    setupSliderFill("gravitySlider", "gravityFill", (val) => {
+      pg.gravity = val;
     });
 
-    // Add obstacles from project cards
-    if (window.innerWidth > 768) {
-      const cards = document.querySelectorAll(".project-card");
+    setupSliderFill("bouncinessSlider", "bouncinessFill", (val) => {
+      pg.bounceFactor = val;
+      document.getElementById("bouncinessValue").textContent = val.toFixed(2);
+    });
 
-      cards.forEach(card => {
-        card.addEventListener("mouseenter", () => {
-          if (!pg.obstacleData.has(card)) {
-            card.dataset.id = card.dataset.id || `ob-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
-            const rect = card.getBoundingClientRect();
-            const obstacleObj = { el: card, rect, vx: 0, vy: 0 };
+    setupSliderFill("clickBoostSlider", "clickBoostFill", (val) => {
+      pg.clickBoost = val;
+      document.getElementById("boostValue").textContent = val;
+    });
 
-            pg.obstacles.push(obstacleObj);
-            pg.obstacleData.set(card, obstacleObj);
-          }
-        });
+    setupSliderFill("sizeSlider", "sizeFill", (val) => {
+      pg.spawnSize = val;
+      pg.balls.forEach(ball => ball.radius = val);
+      document.getElementById("sizeValue").textContent = val;
+    });
 
-        card.addEventListener("mouseleave", () => {
-          const obstacleObj = pg.obstacleData.get(card);
-          if (obstacleObj) {
-            const idx = pg.obstacles.indexOf(obstacleObj);
-            if (idx !== -1) {
-              pg.obstacles.splice(idx, 1);
-            }
-            pg.obstacleData.delete(card);
-          }
-        });
-      });
-    }
+
+    // Reset button
+    document.getElementById("resetButton").addEventListener("click", () => {
+      pg.clear();
+      document.getElementById("bouncyMenu").classList.remove("open");
+      document.getElementById("menuOverlay")?.classList.remove("active");
+
+      const gravity = 1.0;
+      const bounce = 0.9;
+      const boost = 50;
+      const pattern = "random";
+      const enableCollision = false;
+      const size = Math.max(40, window.innerWidth * 0.05);
+
+      document.getElementById("gravitySlider").value = gravity;
+      document.getElementById("bouncinessSlider").value = bounce;
+      document.getElementById("clickBoostSlider").value = boost;
+      document.getElementById("patternSelect").value = pattern;
+      document.getElementById("collisionToggle").checked = enableCollision;
+      document.getElementById("sizeSlider").value = size;
+
+      document.getElementById("gravityValue").textContent = gravity.toFixed(1);
+      document.getElementById("bouncinessValue").textContent = bounce.toFixed(2);
+      document.getElementById("boostValue").textContent = boost;
+      document.getElementById("sizeValue").textContent = size;
+
+      pg.gravity = gravity;
+      pg.bounceFactor = bounce;
+      pg.clickBoost = boost;
+      pg.pattern = pattern;
+      pg.enableCollision = enableCollision;
+      pg.spawnSize = size;
+
+      setTimeout(() => {
+        const color = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+        pg.spawn(pg.spawnSize, -pg.spawnSize * 3, 'circle', pg.spawnSize, 'solid', true, color);
+      }, 350);
+    });
 
     // Resize canvas
     function resizeCanvas() {
@@ -967,6 +957,7 @@ document.getElementById("resetButton").addEventListener("click", () => {
     resizeCanvas();
   });
 </script>
+
 
   </body>
 </html>
