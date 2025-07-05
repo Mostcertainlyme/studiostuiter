@@ -355,13 +355,13 @@ footer h2 {
 }
 
 .menu-content {
-  margin-top: 60px;
+  margin-top: 0px;
 }
 
 .menu-content h3 {
   color: var(--bg-color);
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.3rem;
 }
 
 .menu-content ul {
@@ -432,7 +432,6 @@ footer h2 {
 }
 
 .bouncy-menu select,
-/* .bouncy-menu input[type="range"], */
 .bouncy-menu input[type="checkbox"] {
   margin-top: 0.3rem;
   width: 100%;
@@ -449,7 +448,7 @@ footer h2 {
   height: 48px;
   border-radius: 30px;
   background-color: #e0e0e0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0rem;
   overflow: hidden;
 }
 
@@ -470,9 +469,8 @@ footer h2 {
 /* Text on top of slider */
 .slider-label {
   position: relative;
+  transform: translateY(5px);
   left: 0;
-
-  
   width: 100%;
   text-align: center;
   line-height: 48px;
@@ -536,6 +534,11 @@ footer h2 {
   accent-color: var(--accent-color);
 }
 
+.bouncy-menu #chaosButton
+{
+  margin-top: 1rem;
+}
+
 .bouncy-menu #chaosButton,
 .bouncy-menu #clearButton,
 .bouncy-menu #resetButton {
@@ -557,6 +560,7 @@ footer h2 {
   letter-spacing: 1px;
   width: 100%;
   margin-bottom: 1rem;
+
 }
 
 
