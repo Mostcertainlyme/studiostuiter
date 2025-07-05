@@ -278,9 +278,9 @@ footer h2 {
   box-sizing: border-box;
 }
 
-#bouncyOverlay.menu-overlay.active {
+/* #bouncyOverlay.menu-overlay.active {
   display: block;
-}
+} */
 
 .foto {
   width: 60%;
@@ -396,12 +396,14 @@ footer h2 {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1500;
   opacity: 0;
+  pointer-events: none;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .menu-overlay.active {
   opacity: 1;
+    pointer-events: auto;
   visibility: visible;
 }
 

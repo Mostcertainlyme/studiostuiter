@@ -653,7 +653,7 @@ export function setupBouncyControls(pg) {
     chaosBtn.addEventListener('click', () => {
       // 🧹 Close the bouncy menu first
       document.getElementById('bouncyMenu').classList.remove('open');
-      document.getElementById('bouncyOverlay')?.classList.remove('active');
+      document.getElementById('menuOverlay')?.classList.remove('active');
 
       // Wait a short delay to ensure the menu is closed
       setTimeout(() => {

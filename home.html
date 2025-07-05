@@ -10,7 +10,6 @@
  <!-- 
   - Implement Video player for certain detail media
   - figure out best filter catgories (based on media or on design category)
-  - Implement bounce menu
   - Finish Email form functionality
   - What should the email form be about?
   - Create profile picture thing
@@ -588,31 +587,36 @@
   </footer>
 
   <script>
-    function toggleSideMenu() {
-      const sideMenu = document.getElementById('sideMenu');
-      const menuOverlay = document.getElementById('menuOverlay');
-      
-      if (sideMenu.classList.contains('open')) {
-        sideMenu.classList.remove('open');
-        menuOverlay.classList.remove('active');
-      } else {
-        sideMenu.classList.add('open');
-        menuOverlay.classList.add('active');
-      }
-    }
-
     function toggleBouncyMenu() {
       const bouncyMenu = document.getElementById('bouncyMenu');
-      const bouncyOverlay = document.getElementById('bouncyOverlay');
+      const menuOverlay = document.getElementById('menuOverlay');
 
       if (bouncyMenu.classList.contains('open')) {
         bouncyMenu.classList.remove('open');
-        bouncyOverlay.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        menuOverlay.onclick = null;
       } else {
         bouncyMenu.classList.add('open');
-        bouncyOverlay.classList.add('active');
+        menuOverlay.classList.add('active');
+        menuOverlay.onclick = toggleBouncyMenu;
       }
     }
+
+    function toggleSideMenu() {
+      const sideMenu = document.getElementById('sideMenu');
+      const menuOverlay = document.getElementById('menuOverlay');
+
+      if (sideMenu.classList.contains('open')) {
+        sideMenu.classList.remove('open');
+        menuOverlay.classList.remove('active');
+        menuOverlay.onclick = null;
+      } else {
+        sideMenu.classList.add('open');
+        menuOverlay.classList.add('active');
+        menuOverlay.onclick = toggleSideMenu;
+      }
+    }
+
 
 
     // Close menu with Escape key
@@ -852,7 +856,7 @@ document.getElementById("resetButton").addEventListener("click", () => {
 
   // 2. Close the menu
   document.getElementById("bouncyMenu").classList.remove("open");
-  document.getElementById("bouncyOverlay")?.classList.remove("active");
+  document.getElementById("menuOverlay")?.classList.remove("active");
 
   // 3. Reset sliders and options
   document.getElementById("gravitySlider").value = 1.0;
