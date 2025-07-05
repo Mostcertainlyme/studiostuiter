@@ -106,7 +106,9 @@ main {
   align-items: center;
   justify-content: center;
   gap: 3rem; /* control spacing between image and text*/
-  transform: translateY(35%);
+  transform: translateY(30%);
+  padding-left: 5vw;
+  padding-right: 5vw;
 
   position: relative;
   z-index: var(--intro-index);
@@ -114,7 +116,7 @@ main {
 .intro img.logo {
   margin: 0;
   padding: 0;
-  max-width: 85vw; /* control image size */
+  max-width: 350px; /* control image size */
   height: auto;
   display: block;
 }
@@ -138,6 +140,13 @@ main {
     transform: translateY(-5%);
     min-height: 100vh;
   }
+  .intro img.logo {
+  margin: 0;
+  padding: 0;
+  max-width: 85vw; /* control image size */
+  height: auto;
+  display: block;
+}
 }
 
 
