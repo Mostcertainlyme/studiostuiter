@@ -926,11 +926,28 @@
       document.getElementById("patternSelect").value = pattern;
       document.getElementById("collisionToggle").checked = enableCollision;
       document.getElementById("sizeSlider").value = size;
+      
+      // update slider fills
+      setupSliderFill("gravitySlider", "gravityFill", (val) => {
+        pg.gravity = val;
+      });
 
-      document.getElementById("gravityValue").textContent = gravity.toFixed(1);
-      document.getElementById("bouncinessValue").textContent = bounce.toFixed(2);
-      document.getElementById("boostValue").textContent = boost;
-      document.getElementById("sizeValue").textContent = size;
+      setupSliderFill("bouncinessSlider", "bouncinessFill", (val) => {
+        pg.bounceFactor = val;
+        document.getElementById("bouncinessValue").textContent = val.toFixed(2);
+      });
+
+      setupSliderFill("clickBoostSlider", "clickBoostFill", (val) => {
+        pg.clickBoost = val;
+        document.getElementById("boostValue").textContent = val;
+      });
+
+      setupSliderFill("sizeSlider", "sizeFill", (val) => {
+        pg.spawnSize = val;
+        pg.balls.forEach(ball => ball.radius = val);
+        document.getElementById("sizeValue").textContent = val;
+      });
+
 
       pg.gravity = gravity;
       pg.bounceFactor = bounce;
