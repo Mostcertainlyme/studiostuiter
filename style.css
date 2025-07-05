@@ -537,7 +537,7 @@ footer h2 {
 
 .bouncy-menu #chaosButton
 {
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 .bouncy-menu #chaosButton,
@@ -568,7 +568,9 @@ footer h2 {
 
 #patternSelectOption,
 #collisionToggleOption,
-.bouncy-menu #clearButton {
+.bouncy-menu #clearButton,
+.bouncy-menu #boostLabel {
+
   display: none;
 }
 
