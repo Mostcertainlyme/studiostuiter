@@ -374,8 +374,8 @@ footer h2 {
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  animation: stuiterBounce 1.5s infinite;
-  animation-timing-function: linear;
+  /* animation: stuiterBounce 1.5s infinite; */
+  /* animation-timing-function: linear; */
 }
 
 .scroll-arrow:hover {
@@ -740,8 +740,8 @@ footer p {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: stuiterBounce 1.5s infinite;
-  animation-timing-function: linear;
+  /* animation: stuiterBounce 1.5s infinite;
+  animation-timing-function: linear; */
   transition: all 0.3s ease;
   margin-top: 0;
 }
