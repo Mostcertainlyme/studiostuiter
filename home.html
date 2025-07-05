@@ -35,6 +35,17 @@
   <!-- canvas for bouncyshapes -->
   <canvas id="canvas"></canvas>
 
+  <div id="imageModal" class="image-modal">
+    <span class="modal-close" onclick="closeImageModal()">&times;</span>
+    <img class="modal-content" id="modalImage" />
+
+    <!-- Navigation arrows -->
+    <button id="modalPrev" class="modal-nav prev">&#10094;</button>
+    <button id="modalNext" class="modal-nav next">&#10095;</button>
+  </div>
+
+
+
   
   <!-- Menu button -->
   <button class="menu-btn" onclick="toggleSideMenu()">
@@ -92,7 +103,6 @@
     </div>
   </div>
 
-    <!-- Bouncy Ball Side Menu -->
 <!-- Bouncy Ball Side Menu -->
 <div id="bouncyMenu" class="bouncy-menu obstacle">
   <button class="close-menu-btn" onclick="toggleBouncyMenu()">&times;</button>
@@ -230,7 +240,7 @@
       <!-- Projects grid -->
       <div class="projects-grid">
 
-          <div class="project-card"  data-category="instalation" onclick="toggleProjectDetails(this)">
+          <div class="project-card"  data-category="instalation">
           <div class="project-image">
             <img src="images/projects/Vleugellam/vleugellam4.jpeg" alt="Web Project 1">
           </div>
@@ -276,7 +286,7 @@
           </div>
         </div>
 
-        <div class="project-card"  data-category="web" onclick="toggleProjectDetails(this)">
+        <div class="project-card"  data-category="web">
           <div class="project-image">
             <img src="images/projects/Potgrond/potgrond1.png" alt="Web Project 1">
           </div>
@@ -339,7 +349,7 @@
           </div>
         </div>
 
-        <div class="project-card" data-category="xr" onclick="toggleProjectDetails(this)">
+        <div class="project-card" data-category="xr">
           <div class="project-image">
             <img src="images/projects/Future Botanica/fubo1.jpg" alt="App Project 1">
           </div>
@@ -380,7 +390,7 @@
           </div>
         </div>
 
-        <div class="project-card" data-category="xr" onclick="toggleProjectDetails(this)">
+        <div class="project-card" data-category="xr">
           <div class="project-image">
             <img src="images/projects/Limescoop/limescoop1.jpeg" alt="Brand Project 1">
           </div>
@@ -419,7 +429,7 @@
           </div>
         </div>
 
-        <div class="project-card" data-category="research" onclick="toggleProjectDetails(this)">
+        <div class="project-card" data-category="research">
           <div class="project-image">
             <img class="top-center-focus" src="images/projects/Generative Social Dances/dance1.jpg" alt="3D Project 1">
           </div>
@@ -458,7 +468,7 @@
           </div>
         </div>
 
-        <div class="project-card" data-category="web" onclick="toggleProjectDetails(this)">
+        <div class="project-card" data-category="web">
           <div class="project-image">
             <img src="https://via.placeholder.com/300x200/FFA300/FFFFFF?text=Web+Project+2" alt="Web Project 2">
           </div>
@@ -497,7 +507,7 @@
           </div>
         </div>
 
-        <div class="project-card" data-category="app" onclick="toggleProjectDetails(this)">
+        <div class="project-card" data-category="app">
           <div class="project-image">
             <img src="https://via.placeholder.com/300x200/8AB3BB/FFFFFF?text=App+Project+2" alt="App Project 2">
           </div>
@@ -825,6 +835,80 @@
         behavior: 'smooth'
       });
     }
+
+    // Project card click handeler
+let currentImageIndex = -1;
+let currentImageList = [];
+
+document.addEventListener('click', function (e) {
+  const isImage = e.target.tagName === 'IMG' && e.target.closest('.project-details-media');
+  const projectCard = e.target.closest('.project-card');
+
+  if (isImage) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+
+    // Collect all images inside this specific project card
+    const mediaSection = e.target.closest('.project-details-media');
+    currentImageList = Array.from(mediaSection.querySelectorAll('img'));
+    currentImageIndex = currentImageList.indexOf(e.target);
+
+    modalImg.src = e.target.src;
+    modalImg.alt = e.target.alt || '';
+    modal.classList.add('show');
+
+    return; // ✅ Don't propagate to card toggling
+  }
+
+  // ✅ Toggle project details if clicking card (but not on an image)
+  if (projectCard) {
+    toggleProjectDetails(projectCard);
+  }
+});
+
+// Navigate next
+document.getElementById('modalNext').addEventListener('click', () => {
+  if (currentImageList.length > 0) {
+    currentImageIndex = (currentImageIndex + 1) % currentImageList.length;
+    updateModalImage();
+  }
+});
+
+// Navigate previous
+document.getElementById('modalPrev').addEventListener('click', () => {
+  if (currentImageList.length > 0) {
+    currentImageIndex = (currentImageIndex - 1 + currentImageList.length) % currentImageList.length;
+    updateModalImage();
+  }
+});
+
+function updateModalImage() {
+  const modalImg = document.getElementById('modalImage');
+  const image = currentImageList[currentImageIndex];
+  modalImg.src = image.src;
+  modalImg.alt = image.alt || '';
+}
+
+// Close modal
+function closeImageModal() {
+  const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImage');
+
+  modal.classList.remove('show');
+  modalImg.src = '';
+  currentImageList = [];
+  currentImageIndex = -1;
+}
+// close modal by clicking outside
+document.getElementById('imageModal').addEventListener('click', function (e) {
+  if (e.target === this) {
+    closeImageModal();
+  }
+});
+
   </script>
 
     <script type="module">

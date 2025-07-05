@@ -824,14 +824,15 @@ footer h2 {
   max-height: 0;
   overflow: hidden;
   /* background-color: var(--text-light); */
-   background: rgba(244, 244, 244, 0.7);
+   background: rgba(244, 244, 244, 0.6);
    /* backdrop-filter: blur(10px); */
    
   transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
 }
 
+
 .project-details.open {
-  max-height: 800px;
+  max-height: none;
   padding: 2rem;
 }
 
@@ -891,12 +892,19 @@ footer h2 {
   border-radius: 10px;
   gap: 0.5rem;
   
+  
 }
 
 .project-details-media img:hover {
   transform: scale(1.05);
 }
-
+@media (max-width: 600px) {
+  .gallery3 img {
+    height: auto;
+    max-height: 150px;
+    object-fit: contain;
+  }
+}
 
 
 .close-details-btn {
@@ -1016,7 +1024,7 @@ footer p {
   transform: scale(1.05);
 }
 
-/* Fade in animation */
+/* Fade in animation
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -1026,7 +1034,76 @@ footer p {
     opacity: 1;
     transform: translateY(0);
   }
+} */
+.image-modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+
+  /* Flexbox styles stay here, but won't apply unless .show is added */
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
 }
+
+.image-modal.show {
+  display: flex; /* Only show modal when .show is added */
+}
+
+.modal-content {
+  max-width: 90%;
+  max-height: 80vh;
+  object-fit: contain;
+  width: auto;
+  height: auto;
+}
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  color: white;
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.modal-close:hover {
+  color: #ccc;
+}
+
+.modal-nav {
+  position: absolute;
+  top: 50%;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.modal-nav.prev {
+  left: 20px;
+}
+
+.modal-nav.next {
+  right: 20px;
+}
+
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 
 
 
