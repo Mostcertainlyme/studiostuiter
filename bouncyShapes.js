@@ -606,3 +606,83 @@ function drawProgressFill(ctx, ball) {
 
   ctx.restore();
 }
+
+// export functions to listen too
+export function setupBouncyControls(pg) {
+  document.getElementById('gravitySlider').addEventListener('input', e => {
+    pg.gravity = parseFloat(e.target.value);
+    document.getElementById('gravityValue').textContent = pg.gravity.toFixed(1);
+  });
+
+  document.getElementById('bouncinessSlider').addEventListener('input', e => {
+    pg.bounceFactor = parseFloat(e.target.value);
+    document.getElementById('bouncinessValue').textContent = pg.bounceFactor.toFixed(2);
+  });
+
+  document.getElementById('clickBoostSlider').addEventListener('input', e => {
+    pg.clickBoost = parseFloat(e.target.value);
+    document.getElementById('boostValue').textContent = pg.clickBoost.toFixed(0);
+  });
+
+  document.getElementById('sizeSlider').addEventListener('input', e => {
+    pg.spawnSize = parseInt(e.target.value);
+    document.getElementById('sizeValue').textContent = pg.spawnSize;
+  });
+
+  document.getElementById('collisionToggle').addEventListener('change', e => {
+    pg.enableCollision = e.target.checked;
+  });
+
+  document.getElementById('clearButton').addEventListener('click', () => {
+    pg.clearShapes(); // your module should expose this
+  });
+
+  document.getElementById('patternSelect').addEventListener('change', e => {
+    pg.selectedPattern = e.target.value;
+  });
+
+
+  const clearBtn = document.getElementById('clearButton');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      pg.clear(); // 🧼 clears the balls array
+    });
+  }
+
+  const chaosBtn = document.getElementById('chaosButton');
+  if (chaosBtn) {
+    chaosBtn.addEventListener('click', () => {
+
+      // 🧹 Close the bouncy menu
+      document.getElementById('bouncyMenu').classList.remove('open');
+      document.getElementById('bouncyOverlay')?.classList.remove('active');
+
+      pg.enableCollision = true;
+
+      const shapes = pg.shapeOptions || ['circle', 'square', 'triangle', 'star'];
+      const patterns = pg.pattern || ['random', 'solid'];
+      const howMany = Math.floor(Math.random() * 20) + 10; // between 10 and 30
+
+      for (let i = 0; i < howMany; i++) {
+        const x = Math.random() * window.innerWidth;
+        const y = -Math.random() * 500;
+        const size = pg.size;
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+        const pattern = patterns[Math.floor(Math.random() * patterns.length)];
+        const color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+
+        pg.spawn(
+          x,
+          y,
+          shape,
+          size,
+          pattern,
+          true,
+          pattern === "solid" ? color : undefined
+        );
+      }
+    });
+  }
+  
+}
+

@@ -42,7 +42,7 @@
     </svg>
   </button>
 <!-- Bouncy Ball Icon with Upward Shift -->
-<button class="bouncy-btn" onclick="toggleSideMenu()">
+<button class="bouncy-btn" onclick="toggleBouncyMenu()">
   <svg class="menu-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
     
     <!-- Shifted bounce arc -->
@@ -63,10 +63,7 @@
   </svg>
 </button>
 
-
-
-
-  <!-- Side menu -->
+  <!-- Personal Side menu -->
   <div id="sideMenu" class="side-menu obstacle">
     <button class="close-menu-btn" onclick="toggleSideMenu()">&times;</button>
     <div class="menu-content">
@@ -93,6 +90,62 @@
         </div></p>
     </div>
   </div>
+
+    <!-- Bouncy Ball Side Menu -->
+<div id="bouncyMenu" class="bouncy-menu obstacle">
+  <button class="close-menu-btn" onclick="toggleBouncyMenu()">&times;</button>
+  <div class="menu-content">
+    <h3>Stuiter instellingen</h3>
+
+    <!-- <fieldset>
+        <legend>Spawn Shapes:</legend>
+        <label><input type="checkbox" class="shapeOption" value="circle" checked> Circle</label>
+        <label><input type="checkbox" class="shapeOption" value="square"> Square</label>
+        <label><input type="checkbox" class="shapeOption" value="triangle"> Triangle</label>
+        <label><input type="checkbox" class="shapeOption" value="star"> Star</label>
+    </fieldset> -->
+
+    <label id="patternSelectOption">
+      Kleur:
+      <select id="patternSelect">
+        <option value="random">Random Colors</option>
+        <option value="progress">Progress Pride</option>
+      </select>
+    </label>
+
+    <label id="gravityValueOption">
+      Zwaartekracht:
+      <input type="range" id="gravitySlider" min="0" max="2" step="0.1" value="0.1">
+      <span id="gravityValue">1.0</span>
+    </label>
+
+    <label id="bouncinessValueOption">
+      Stuiterkracht:
+      <input type="range" id="bouncinessSlider" min="0" max="1" step="0.01" value="0.98">
+      <span id="bouncinessValue">0.98</span>
+    </label>
+
+    <label id="boostValueOption">
+      klik boost:
+      <input type="range" id="clickBoostSlider" min="0" max="50" step="1" value="40">
+      <span id="boostValue">40</span>
+    </label>
+
+    <label id="sizeValueOption">
+      Groote:
+      <input type="range" id="sizeSlider" min="5" max="200" step="1" value="100">
+      <span id="sizeValue">100</span>
+    </label>
+
+    <label id="collisionToggleOption">
+      ballen kunnen botsen:
+      <input type="checkbox" id="collisionToggle">
+    </label>
+    <button id="chaosButton">Chaos!</button>
+    <button id="clearButton">Clear Shapes</button>
+  </div>
+</div>
+
 
   <!-- Menu overlay -->
   <div id="menuOverlay" class="menu-overlay" onclick="toggleSideMenu()"></div>
@@ -534,9 +587,6 @@
   </footer>
 
   <script>
-    document.querySelector('.scroll-up-arrow').addEventListener('click', () => {
-  console.log('[DEBUG] Scroll up arrow clicked');
-});
     function toggleSideMenu() {
       const sideMenu = document.getElementById('sideMenu');
       const menuOverlay = document.getElementById('menuOverlay');
@@ -549,6 +599,20 @@
         menuOverlay.classList.add('active');
       }
     }
+
+    function toggleBouncyMenu() {
+      const bouncyMenu = document.getElementById('bouncyMenu');
+      const bouncyOverlay = document.getElementById('bouncyOverlay');
+
+      if (bouncyMenu.classList.contains('open')) {
+        bouncyMenu.classList.remove('open');
+        bouncyOverlay.classList.remove('active');
+      } else {
+        bouncyMenu.classList.add('open');
+        bouncyOverlay.classList.add('active');
+      }
+    }
+
 
     // Close menu with Escape key
     document.addEventListener('keydown', function(event) {
@@ -713,26 +777,46 @@
     }
   </script>
 
-  <script type="module">
-    import BouncyShapesPlayground from './bouncyShapes.js';
+<script type="module">
+  import BouncyShapesPlayground, { setupBouncyControls } from './bouncyShapes.js';
+
+  window.addEventListener('DOMContentLoaded', () => {
     const spawnSize = Math.max(40, window.innerWidth * 0.05);
 
-    /* playground ------------------------------------------------------- */
     const pg = new BouncyShapesPlayground({
-      canvas:'#canvas',         // set the canvas div where the shapes live in
-      gravity:1.0,              // set gravity force (less is more floaty)
-      bounceFactor:0.9,         // set bounceFactor this is how much velocity the shape loses everytime it bounces (1 is perfect forever bounce)
-      inertiaFactor:0.5,        // how much moving the window around affects the ball momentum
-      clickBoost:50,            // how much force gets applied to the shape if clicked on
-      spawnSize: 120,            // how big the spawned shapes should be
-      enableCollision:false,     // flag to enable shape to shape collision
-      clickSpawn:false,          // flag to enable shape spawning wherever you click in the canvas
-      enableMotion:true,        // flag to enable motion sensors on mobile to affect shape momentum
-      motionFactor:0.8,         // factor to control how much motion gets applied to shape momentum 
-      pattern:['random','progress','solid'],                  // available color patterns for the shape
-      shapeOptions:['circle','square','triangle','star'],     // diff
-      enableShadow:true,
+      canvas: '#canvas',
+      gravity: 1.0,
+      bounceFactor: 0.9,
+      inertiaFactor: 0.5,
+      clickBoost: 50,
+      spawnSize: spawnSize,
+      enableCollision: false,
+      clickSpawn: false,
+      enableMotion: true,
+      motionFactor: 0.8,
+      pattern: ['random', 'progress', 'solid'],
+      shapeOptions: ['circle', 'square', 'triangle', 'star'],
+      enableShadow: true,
     });
+
+    setupBouncyControls(pg);
+
+    // After pg is created and bouncy Controls are setup sync the menu to its current values
+    document.getElementById("gravitySlider").value = pg.gravity;
+    document.getElementById("gravityValue").textContent = pg.gravity.toFixed(1);
+
+    document.getElementById("bouncinessSlider").value = pg.bounceFactor;
+    document.getElementById("bouncinessValue").textContent = pg.bounceFactor.toFixed(2);
+
+    document.getElementById("clickBoostSlider").value = pg.clickBoost;
+    document.getElementById("boostValue").textContent = pg.clickBoost;
+
+    document.getElementById("sizeSlider").value = pg.spawnSize;
+    document.getElementById("sizeValue").textContent = pg.spawnSize;
+
+    document.getElementById("collisionToggle").checked = pg.enableCollision;
+
+    document.getElementById("patternSelect").value = Array.isArray(pg.pattern) ? pg.pattern[0] : pg.pattern;
 
     function getCSSVariable(name) {
       return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -747,76 +831,74 @@
 
     const randomColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
 
-    // Make sure the following properties exist!
     pg.obstacles = pg.obstacles || [];
     pg.obstacleData = pg.obstacleData || new Map();
-    /* example spawn: hot-pink circle flying in from above -------------- */
+
+    // Example spawn
     pg.spawn(
-      pg.spawnSize,                 // off-screen X
-      -pg.spawnSize*3,              // off-screen Y
-      'circle',                     // shape
-      spawnSize,                          // size in px
-      'solid',                      // color pattern
-      true,                         // "shape spawns outside of the frame" flag
-      randomColor,                // actual colour when using "solid" option
+      pg.spawnSize,
+      -pg.spawnSize * 3,
+      'circle',
+      spawnSize,
+      'solid',
+      true,
+      randomColor
     );
 
-
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(() => {
-    const newSize = Math.max(40, window.innerWidth * 0.05);
-    pg.spawnSize = newSize;
-    pg.balls.forEach(ball => {
-      ball.radius = newSize;
+    // Resize handler for dynamic scaling
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const newSize = Math.max(40, window.innerWidth * 0.05);
+        pg.spawnSize = newSize;
+        pg.balls.forEach(ball => {
+          ball.radius = newSize;
+        });
+      }, 150);
     });
-  }, 150); // only updates after 150ms of no resize
-});
 
-  // dynamic adding of project cards to obstacles when hover over
-  document.addEventListener("DOMContentLoaded", () => {
-    // Only run on screens wider than 768px (or adjust threshold as needed)
-    if (window.innerWidth <= 768) return;
+    // Add obstacles from project cards
+    if (window.innerWidth > 768) {
+      const cards = document.querySelectorAll(".project-card");
 
-    const cards = document.querySelectorAll(".project-card");
+      cards.forEach(card => {
+        card.addEventListener("mouseenter", () => {
+          if (!pg.obstacleData.has(card)) {
+            card.dataset.id = card.dataset.id || `ob-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+            const rect = card.getBoundingClientRect();
+            const obstacleObj = { el: card, rect, vx: 0, vy: 0 };
 
-    cards.forEach(card => {
-      card.addEventListener("mouseenter", () => {
-        if (!pg.obstacleData.has(card)) {
-          card.dataset.id = card.dataset.id || `ob-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
-          const rect = card.getBoundingClientRect();
-          const obstacleObj = { el: card, rect, vx: 0, vy: 0 };
-
-          pg.obstacles.push(obstacleObj);
-          pg.obstacleData.set(card, obstacleObj);
-          console.log(`[DEBUG] Added to obstacles. Total: ${pg.obstacles.length}`);
-        }
-      });
-
-      card.addEventListener("mouseleave", () => {
-        const obstacleObj = pg.obstacleData.get(card);
-        if (obstacleObj) {
-          const idx = pg.obstacles.indexOf(obstacleObj);
-          if (idx !== -1) {
-            pg.obstacles.splice(idx, 1);
-            console.log(`[DEBUG] Removed from pg.obstacles. Total: ${pg.obstacles.length}`);
+            pg.obstacles.push(obstacleObj);
+            pg.obstacleData.set(card, obstacleObj);
           }
-          const deleted = pg.obstacleData.delete(card);
-          console.log(`[DEBUG] Removed from pg.obstacleData:`, deleted);
-        }
+        });
+
+        card.addEventListener("mouseleave", () => {
+          const obstacleObj = pg.obstacleData.get(card);
+          if (obstacleObj) {
+            const idx = pg.obstacles.indexOf(obstacleObj);
+            if (idx !== -1) {
+              pg.obstacles.splice(idx, 1);
+            }
+            pg.obstacleData.delete(card);
+          }
+        });
       });
-      
-    });
-  });
+    }
+
+    // Resize canvas
     function resizeCanvas() {
       const canvas = document.getElementById("canvas");
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      }
-      window.addEventListener("resize", resizeCanvas);
-      window.addEventListener("orientationchange", resizeCanvas);
-      resizeCanvas(); // initial call
-  </script>
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("orientationchange", resizeCanvas);
+    resizeCanvas();
+  });
+</script>
+
   </body>
 </html>
 

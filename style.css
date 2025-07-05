@@ -278,6 +278,10 @@ footer h2 {
   box-sizing: border-box;
 }
 
+#bouncyOverlay.menu-overlay.active {
+  display: block;
+}
+
 .foto {
   width: 60%;
   border-radius: 10px;
@@ -400,6 +404,85 @@ footer h2 {
   opacity: 1;
   visibility: visible;
 }
+
+.bouncy-menu {
+  position: fixed;
+  top: 0;
+  left: -201px; /* slightly more off screen for collision weirdness to stop */
+  width: 200px;
+  height: 100vh;
+  background-color: var(--text-light);
+  box-shadow: -5px 0 15px #32323222;
+  transition: left 0.3s ease;
+  z-index: 2000;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+
+.bouncy-menu.open {
+  left: 0;
+}
+
+.bouncy-menu label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.bouncy-menu select,
+.bouncy-menu input[type="range"],
+.bouncy-menu input[type="checkbox"] {
+  margin-top: 0.3rem;
+  width: 100%;
+  padding: 0.2rem;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.9rem;
+  background-color: #ffffff;
+  color: #333;
+}
+
+.bouncy-menu input[type="range"] {
+  accent-color: var(--accent-color);
+}
+.bouncy-menu #chaosButton,
+.bouncy-menu #clearButton {
+  background: linear-gradient(45deg, var(--studio-color), var(--accent-color));
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 163, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+
+
+#patternSelectOption,
+#collisionToggleOption {
+  display: none;
+}
+
+#gravityValue ,
+#bouncinessValue,
+#boostValue,
+#sizeValue {
+  display: none;
+}
+
+
 
 /* Scroll arrow styling */
 .scroll-arrow {
@@ -885,7 +968,7 @@ footer p {
   /* Side menu adjustments for mobile */
   .side-menu {
     width: 280px;
-    right: -280px;
+    right: -281px;
     padding: 1.5rem;
   }
 
@@ -900,6 +983,8 @@ footer p {
   .menu-content a {
     font-size: 1rem;
   }
+
+
 
   /* Social links adjustments for mobile */
   .social-links {
