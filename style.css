@@ -447,7 +447,8 @@ footer h2 {
   accent-color: var(--accent-color);
 }
 .bouncy-menu #chaosButton,
-.bouncy-menu #clearButton {
+.bouncy-menu #clearButton,
+.bouncy-menu #resetButton {
   background: linear-gradient(45deg, var(--studio-color), var(--accent-color));
   color: white;
   border: none;
@@ -471,7 +472,8 @@ footer h2 {
 
 
 #patternSelectOption,
-#collisionToggleOption {
+#collisionToggleOption,
+.bouncy-menu #clearButton {
   display: none;
 }
 

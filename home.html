@@ -143,6 +143,7 @@
     </label>
     <button id="chaosButton">Chaos!</button>
     <button id="clearButton">Clear Shapes</button>
+    <button id="resetButton">Reset</button>
   </div>
 </div>
 
@@ -844,6 +845,55 @@
       true,
       randomColor
     );
+
+document.getElementById("resetButton").addEventListener("click", () => {
+  // 1. Clear all shapes
+  pg.clear();
+
+  // 2. Close the menu
+  document.getElementById("bouncyMenu").classList.remove("open");
+  document.getElementById("bouncyOverlay")?.classList.remove("active");
+
+  // 3. Reset sliders and options
+  document.getElementById("gravitySlider").value = 1.0;
+  document.getElementById("bouncinessSlider").value = 0.9;
+  document.getElementById("clickBoostSlider").value = 50;
+  document.getElementById("patternSelect").value = "random";
+  document.getElementById("collisionToggle").checked = false;
+
+  document.getElementById("gravityValue").textContent = "1.0";
+  document.getElementById("bouncinessValue").textContent = "0.9";
+  document.getElementById("boostValue").textContent = "50";
+
+  // 🔥 Recalculate and sync spawnSize
+  pg.spawnSize = Math.max(40, window.innerWidth * 0.05);
+  document.getElementById("sizeSlider").value = pg.spawnSize;
+  document.getElementById("sizeValue").textContent = pg.spawnSize.toString();
+
+  // 4. Wait a moment for the menu to fully close, then spawn initial shape
+  setTimeout(() => {
+    const colorOptions = [
+      getCSSVariable('--bg-color'),
+      getCSSVariable('--studio-color'),
+      getCSSVariable('--stuiter-color'),
+      getCSSVariable('--accent-color')
+    ];
+    const randomColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+
+    pg.spawn(
+      pg.spawnSize,
+      -pg.spawnSize * 5,
+      'circle',
+      pg.spawnSize,
+      'solid',
+      true,
+      randomColor
+    );
+  }, 350); // 350ms delay
+});
+
+
+
 
     // Resize handler for dynamic scaling
     window.addEventListener('resize', () => {
