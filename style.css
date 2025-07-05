@@ -417,7 +417,8 @@ footer h2 {
   box-shadow: -5px 0 15px #32323222;
   transition: left 0.3s ease;
   z-index: 2000;
-  padding: 2rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   box-sizing: border-box;
 }
 
