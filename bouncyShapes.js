@@ -648,41 +648,41 @@ export function setupBouncyControls(pg) {
       pg.clear(); // 🧼 clears the balls array
     });
   }
-
   const chaosBtn = document.getElementById('chaosButton');
   if (chaosBtn) {
     chaosBtn.addEventListener('click', () => {
-
-      // 🧹 Close the bouncy menu
+      // 🧹 Close the bouncy menu first
       document.getElementById('bouncyMenu').classList.remove('open');
       document.getElementById('bouncyOverlay')?.classList.remove('active');
 
-      pg.enableCollision = true;
+      // Wait a short delay to ensure the menu is closed
+      setTimeout(() => {
+        pg.enableCollision = true;
 
-      const shapes = pg.shapeOptions || ['circle', 'square', 'triangle', 'star'];
-      const patterns = pg.pattern || ['random', 'solid'];
-      const howMany = Math.floor(Math.random() * 20) + 10; // between 10 and 30
+        const shapes = pg.shapeOptions || ['circle', 'square', 'triangle', 'star'];
+        const patterns = pg.pattern || ['random', 'solid'];
+        const howMany = Math.floor(Math.random() * 20) + 10; // between 10 and 30
 
-      for (let i = 0; i < howMany; i++) {
-        const x = Math.random() * window.innerWidth;
-        const y = -Math.random() * 500;
-        const size = pg.size;
-        const shape = shapes[Math.floor(Math.random() * shapes.length)];
-        const pattern = patterns[Math.floor(Math.random() * patterns.length)];
-        const color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+        for (let i = 0; i < howMany; i++) {
+          const x = Math.random() * window.innerWidth;
+          const y = -Math.random() * 500;
+          const size = pg.size || pg.spawnSize; // fallback to spawnSize
+          const shape = shapes[Math.floor(Math.random() * shapes.length)];
+          const pattern = patterns[Math.floor(Math.random() * patterns.length)];
+          const color = `hsl(${Math.random() * 360}, 70%, 60%)`;
 
-        pg.spawn(
-          x,
-          y,
-          shape,
-          size,
-          pattern,
-          true,
-          pattern === "solid" ? color : undefined
-        );
-      }
+          pg.spawn(
+            x,
+            y,
+            shape,
+            size,
+            pattern,
+            true,
+            pattern === "solid" ? color : undefined
+          );
+        }
+      }, 300); // ⏱ Adjust delay if needed
     });
   }
-  
 }
 
