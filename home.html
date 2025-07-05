@@ -822,195 +822,193 @@
     }
   </script>
 
-<script type="module">
-  import BouncyShapesPlayground, { setupBouncyControls } from './bouncyShapes.js'
+    <script type="module">
+      import BouncyShapesPlayground, { setupBouncyControls } from './bouncyShapes.js'
 
-  let pg; // Define globally so it's accessible in all functions
+      let pg; // Define globally so it's accessible in all functions
 
-  function setupSliderFill(sliderId, fillId, onUpdate) {
-    const slider = document.getElementById(sliderId);
-    const fill = fillId ? document.getElementById(fillId) : null;
+      function setupSliderFill(sliderId, fillId, onUpdate) {
+        const slider = document.getElementById(sliderId);
+        const fill = fillId ? document.getElementById(fillId) : null;
 
-    function update() {
-      const percent = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
-      if (fill) fill.style.width = `${percent}%`;
-      if (onUpdate) onUpdate(parseFloat(slider.value));
-    }
+        function update() {
+          const percent = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+          if (fill) fill.style.width = `${percent}%`;
+          if (onUpdate) onUpdate(parseFloat(slider.value));
+        }
 
-    slider.addEventListener('input', update);
-    update(); // Initial fill
-  }
+        slider.addEventListener('input', update);
+        update(); // Initial fill
+      }
 
-  function getCSSVariable(name) {
-    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-  }
+      function getCSSVariable(name) {
+        return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const spawnSize = Math.max(40, window.innerWidth * 0.05);
-    document.getElementById("sizeSlider").value = spawnSize;
-    document.getElementById("sizeValue").textContent = spawnSize;
+      window.addEventListener('DOMContentLoaded', () => {
+        const spawnSize = Math.max(40, window.innerWidth * 0.05);
+        document.getElementById("sizeSlider").value = spawnSize;
+        document.getElementById("sizeValue").textContent = spawnSize;
 
-    pg = new BouncyShapesPlayground({
-      canvas: '#canvas',
-      gravity: 1.0,
-      bounceFactor: 0.9,
-      inertiaFactor: 0.5,
-      clickBoost: 50,
-      spawnSize: spawnSize,
-      enableCollision: false,
-      clickSpawn: false,
-      enableMotion: true,
-      motionFactor: 0.8,
-      pattern: ['random', 'progress', 'solid'],
-      shapeOptions: ['circle', 'square', 'triangle', 'star'],
-      enableShadow: true,
-    });
-    setupBouncyControls(pg); 
+        pg = new BouncyShapesPlayground({
+          canvas: '#canvas',
+          gravity: 1.0,
+          bounceFactor: 0.9,
+          inertiaFactor: 0.5,
+          clickBoost: 50,
+          spawnSize: spawnSize,
+          enableCollision: false,
+          clickSpawn: false,
+          enableMotion: true,
+          motionFactor: 0.8,
+          pattern: ['random', 'progress', 'solid'],
+          shapeOptions: ['circle', 'square', 'triangle', 'star'],
+          enableShadow: true,
+        });
+        setupBouncyControls(pg); 
 
-    const colorOptions = [
-      getCSSVariable('--bg-color'),
-      getCSSVariable('--studio-color'),
-      getCSSVariable('--stuiter-color'),
-      getCSSVariable('--accent-color')
-    ];
-    const randomColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
-    // Spawn one shape at start
-    pg.spawn(
-      pg.spawnSize,
-      -pg.spawnSize * 3,
-      'circle',
-      spawnSize,
-      'solid',
-      true,
-      randomColor
-    );
+        const colorOptions = [
+          getCSSVariable('--bg-color'),
+          getCSSVariable('--studio-color'),
+          getCSSVariable('--stuiter-color'),
+          getCSSVariable('--accent-color')
+        ];
+        const randomColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+        // Spawn one shape at start
+        pg.spawn(
+          pg.spawnSize,
+          -pg.spawnSize * 3,
+          'circle',
+          spawnSize,
+          'solid',
+          true,
+          randomColor
+        );
 
-    // Gravity slider
-    setupSliderFill("gravitySlider", "gravityFill", (val) => {
-      pg.gravity = val;
-    });
-
-    setupSliderFill("bouncinessSlider", "bouncinessFill", (val) => {
-      pg.bounceFactor = val;
-      document.getElementById("bouncinessValue").textContent = val.toFixed(2);
-    });
-
-    setupSliderFill("clickBoostSlider", "clickBoostFill", (val) => {
-      pg.clickBoost = val;
-      document.getElementById("boostValue").textContent = val;
-    });
-
-    setupSliderFill("sizeSlider", "sizeFill", (val) => {
-      pg.spawnSize = val;
-      pg.balls.forEach(ball => ball.radius = val);
-      document.getElementById("sizeValue").textContent = val;
-    });
-
-    pg.obstacles = pg.obstacles || [];
-    pg.obstacleData = pg.obstacleData || new Map();
-
-    // Add obstacles from project cards on desktop
-    if (window.innerWidth > 768) {
-      const cards = document.querySelectorAll(".project-card");
-
-      cards.forEach(card => {
-        card.addEventListener("mouseenter", () => {
-          if (!pg.obstacleData.has(card)) {
-            card.dataset.id = card.dataset.id || `ob-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
-            const rect = card.getBoundingClientRect();
-            const obstacleObj = { el: card, rect, vx: 0, vy: 0 };
-
-            pg.obstacles.push(obstacleObj);
-            pg.obstacleData.set(card, obstacleObj);
-            console.log(`[Obstacle] Added: ${card.dataset.id}`);
-          }
+        // Gravity slider
+        setupSliderFill("gravitySlider", "gravityFill", (val) => {
+          pg.gravity = val;
         });
 
-        card.addEventListener("mouseleave", () => {
-          const obstacleObj = pg.obstacleData.get(card);
-          if (obstacleObj) {
-            const idx = pg.obstacles.indexOf(obstacleObj);
-            if (idx !== -1) {
-              pg.obstacles.splice(idx, 1);
-              console.log(`[Obstacle] Removed: ${card.dataset.id}`);
-            }
-            pg.obstacleData.delete(card);
-          }
+        setupSliderFill("bouncinessSlider", "bouncinessFill", (val) => {
+          pg.bounceFactor = val;
+          document.getElementById("bouncinessValue").textContent = val.toFixed(2);
         });
+
+        setupSliderFill("clickBoostSlider", "clickBoostFill", (val) => {
+          pg.clickBoost = val;
+          document.getElementById("boostValue").textContent = val;
+        });
+
+        setupSliderFill("sizeSlider", "sizeFill", (val) => {
+          pg.spawnSize = val;
+          pg.balls.forEach(ball => ball.radius = val);
+          document.getElementById("sizeValue").textContent = val;
+        });
+
+        pg.obstacles = pg.obstacles || [];
+        pg.obstacleData = pg.obstacleData || new Map();
+
+        // Add obstacles from project cards on desktop
+        if (window.innerWidth > 768) {
+          const cards = document.querySelectorAll(".project-card");
+
+          cards.forEach(card => {
+            card.addEventListener("mouseenter", () => {
+              if (!pg.obstacleData.has(card)) {
+                card.dataset.id = card.dataset.id || `ob-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+                const rect = card.getBoundingClientRect();
+                const obstacleObj = { el: card, rect, vx: 0, vy: 0 };
+
+                pg.obstacles.push(obstacleObj);
+                pg.obstacleData.set(card, obstacleObj);
+                console.log(`[Obstacle] Added: ${card.dataset.id}`);
+              }
+            });
+
+            card.addEventListener("mouseleave", () => {
+              const obstacleObj = pg.obstacleData.get(card);
+              if (obstacleObj) {
+                const idx = pg.obstacles.indexOf(obstacleObj);
+                if (idx !== -1) {
+                  pg.obstacles.splice(idx, 1);
+                  console.log(`[Obstacle] Removed: ${card.dataset.id}`);
+                }
+                pg.obstacleData.delete(card);
+              }
+            });
+          });
+        }
+
+
+
+        // Reset button
+        document.getElementById("resetButton").addEventListener("click", () => {
+          pg.clear();
+          document.getElementById("bouncyMenu").classList.remove("open");
+          document.getElementById("menuOverlay")?.classList.remove("active");
+
+          const gravity = 1.0;
+          const bounce = 0.9;
+          const boost = 50;
+          const pattern = "random";
+          const enableCollision = false;
+          const size = Math.max(40, window.innerWidth * 0.05);
+
+          document.getElementById("gravitySlider").value = gravity;
+          document.getElementById("bouncinessSlider").value = bounce;
+          document.getElementById("clickBoostSlider").value = boost;
+          document.getElementById("patternSelect").value = pattern;
+          document.getElementById("collisionToggle").checked = enableCollision;
+          document.getElementById("sizeSlider").value = size;
+          
+          // update slider fills
+          setupSliderFill("gravitySlider", "gravityFill", (val) => {
+            pg.gravity = val;
+          });
+
+          setupSliderFill("bouncinessSlider", "bouncinessFill", (val) => {
+            pg.bounceFactor = val;
+            document.getElementById("bouncinessValue").textContent = val.toFixed(2);
+          });
+
+          setupSliderFill("clickBoostSlider", "clickBoostFill", (val) => {
+            pg.clickBoost = val;
+            document.getElementById("boostValue").textContent = val;
+          });
+
+          setupSliderFill("sizeSlider", "sizeFill", (val) => {
+            pg.spawnSize = val;
+            pg.balls.forEach(ball => ball.radius = val);
+            document.getElementById("sizeValue").textContent = val;
+          });
+
+
+          pg.gravity = gravity;
+          pg.bounceFactor = bounce;
+          pg.clickBoost = boost;
+          pg.pattern = pattern;
+          pg.enableCollision = enableCollision;
+          pg.spawnSize = size;
+
+          setTimeout(() => {
+            const color = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+            pg.spawn(pg.spawnSize, -pg.spawnSize * 3, 'circle', pg.spawnSize, 'solid', true, color);
+          }, 350);
+        });
+
+        // Resize canvas
+        function resizeCanvas() {
+          const canvas = document.getElementById("canvas");
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        window.addEventListener("orientationchange", resizeCanvas);
+        resizeCanvas();
       });
-    }
-
-
-
-    // Reset button
-    document.getElementById("resetButton").addEventListener("click", () => {
-      pg.clear();
-      document.getElementById("bouncyMenu").classList.remove("open");
-      document.getElementById("menuOverlay")?.classList.remove("active");
-
-      const gravity = 1.0;
-      const bounce = 0.9;
-      const boost = 50;
-      const pattern = "random";
-      const enableCollision = false;
-      const size = Math.max(40, window.innerWidth * 0.05);
-
-      document.getElementById("gravitySlider").value = gravity;
-      document.getElementById("bouncinessSlider").value = bounce;
-      document.getElementById("clickBoostSlider").value = boost;
-      document.getElementById("patternSelect").value = pattern;
-      document.getElementById("collisionToggle").checked = enableCollision;
-      document.getElementById("sizeSlider").value = size;
-      
-      // update slider fills
-      setupSliderFill("gravitySlider", "gravityFill", (val) => {
-        pg.gravity = val;
-      });
-
-      setupSliderFill("bouncinessSlider", "bouncinessFill", (val) => {
-        pg.bounceFactor = val;
-        document.getElementById("bouncinessValue").textContent = val.toFixed(2);
-      });
-
-      setupSliderFill("clickBoostSlider", "clickBoostFill", (val) => {
-        pg.clickBoost = val;
-        document.getElementById("boostValue").textContent = val;
-      });
-
-      setupSliderFill("sizeSlider", "sizeFill", (val) => {
-        pg.spawnSize = val;
-        pg.balls.forEach(ball => ball.radius = val);
-        document.getElementById("sizeValue").textContent = val;
-      });
-
-
-      pg.gravity = gravity;
-      pg.bounceFactor = bounce;
-      pg.clickBoost = boost;
-      pg.pattern = pattern;
-      pg.enableCollision = enableCollision;
-      pg.spawnSize = size;
-
-      setTimeout(() => {
-        const color = colorOptions[Math.floor(Math.random() * colorOptions.length)];
-        pg.spawn(pg.spawnSize, -pg.spawnSize * 3, 'circle', pg.spawnSize, 'solid', true, color);
-      }, 350);
-    });
-
-    // Resize canvas
-    function resizeCanvas() {
-      const canvas = document.getElementById("canvas");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    window.addEventListener("resize", resizeCanvas);
-    window.addEventListener("orientationchange", resizeCanvas);
-    resizeCanvas();
-  });
-</script>
-
-
+    </script>
   </body>
 </html>
 
