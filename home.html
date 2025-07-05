@@ -858,23 +858,37 @@ document.getElementById("resetButton").addEventListener("click", () => {
   document.getElementById("bouncyMenu").classList.remove("open");
   document.getElementById("menuOverlay")?.classList.remove("active");
 
-  // 3. Reset sliders and options
-  document.getElementById("gravitySlider").value = 1.0;
-  document.getElementById("bouncinessSlider").value = 0.9;
-  document.getElementById("clickBoostSlider").value = 50;
-  document.getElementById("patternSelect").value = "random";
-  document.getElementById("collisionToggle").checked = false;
+  // 3. Reset sliders and their displayed values
+  const gravity = 1.0;
+  const bounce = 0.9;
+  const boost = 50;
+  const pattern = "random";
+  const enableCollision = false;
+  const size = Math.max(40, window.innerWidth * 0.05);
 
-  document.getElementById("gravityValue").textContent = "1.0";
-  document.getElementById("bouncinessValue").textContent = "0.9";
-  document.getElementById("boostValue").textContent = "50";
+  // Set slider values
+  document.getElementById("gravitySlider").value = gravity;
+  document.getElementById("bouncinessSlider").value = bounce;
+  document.getElementById("clickBoostSlider").value = boost;
+  document.getElementById("patternSelect").value = pattern;
+  document.getElementById("collisionToggle").checked = enableCollision;
+  document.getElementById("sizeSlider").value = size;
 
-  // 🔥 Recalculate and sync spawnSize
-  pg.spawnSize = Math.max(40, window.innerWidth * 0.05);
-  document.getElementById("sizeSlider").value = pg.spawnSize;
-  document.getElementById("sizeValue").textContent = pg.spawnSize.toString();
+  // Set UI readouts
+  document.getElementById("gravityValue").textContent = gravity.toFixed(1);
+  document.getElementById("bouncinessValue").textContent = bounce.toFixed(2);
+  document.getElementById("boostValue").textContent = boost;
+  document.getElementById("sizeValue").textContent = size;
 
-  // 4. Wait a moment for the menu to fully close, then spawn initial shape
+  // ✅ Actually update the playground state
+  pg.gravity = gravity;
+  pg.bounceFactor = bounce;
+  pg.clickBoost = boost;
+  pg.pattern = pattern;
+  pg.enableCollision = enableCollision;
+  pg.spawnSize = size;
+
+  // 4. Delay before respawning the shape
   setTimeout(() => {
     const colorOptions = [
       getCSSVariable('--bg-color'),
@@ -893,9 +907,10 @@ document.getElementById("resetButton").addEventListener("click", () => {
       true,
       randomColor
     );
-  }, 350); // 350ms delay
+  }, 350);
 });
 
+  
 
 
 
