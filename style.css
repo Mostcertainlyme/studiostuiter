@@ -132,11 +132,11 @@ main {
     align-items: center;
     flex-direction: column;
     flex-wrap: wrap;
-    padding: 0.3rem;
+    padding: 2.3rem;
     gap:1rem;
-    text-align: center;
-    transform: translateY(20%);
-    margin-bottom: 4.5rem;
+    text-align: left;
+    transform: translateY(0%);
+    min-height: 100vh;
   }
 }
 
