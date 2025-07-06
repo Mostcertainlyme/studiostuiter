@@ -107,8 +107,9 @@ main {
   justify-content: center;
   gap: 3rem; /* control spacing between image and text*/
   transform: translateY(30%);
-  padding-left: 5vw;
-  padding-right: 5vw;
+
+  padding-left: 7.5vw;
+  padding-right: 7.5vw;
 
   position: relative;
   z-index: var(--intro-index);
