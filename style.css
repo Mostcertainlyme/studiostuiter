@@ -103,16 +103,19 @@ main {
 .intro {
   display: inline-flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 3rem; /* control spacing between image and text*/
-  transform: translateY(30%);
+  align-items: center;       /* vertically align image and text */
+  justify-content: center;   /* horizontally center the items inside */
+  gap: 3rem;
 
-  padding-left: 7.5vw;
-  padding-right: 7.5vw;
+  margin-left: auto;
+  margin-right: auto;        /* 👈 center the whole section in its container */
+
+  padding-left: 4vw;
+  padding-right: 4vw;
 
   position: relative;
   z-index: var(--intro-index);
+  transform: translateY(30%);
 }
 .intro img.logo {
   margin: 0;
@@ -124,6 +127,7 @@ main {
 .intro p {
   margin: 0;
   padding: 0;
+  max-width: 350px;
 /* line-height: 1.4; optional: tighten text */
   
 }
