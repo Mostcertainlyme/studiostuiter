@@ -1047,48 +1047,46 @@ document.getElementById('imageModal').addEventListener('click', function (e) {
 
 
 
-        // Reset button
-       document.getElementById("resetButton").addEventListener("click", () => {
-        // Close menu
-        document.getElementById("bouncyMenu").classList.remove("open");
-        document.getElementById("menuOverlay")?.classList.remove("active");
+        document.getElementById("resetButton").addEventListener("click", () => {
+          // 1. Close bouncy menu and overlay immediately
+          document.getElementById("bouncyMenu").classList.remove("open");
+          document.getElementById("menuOverlay")?.classList.remove("active");
 
- 
-
-
-
-        // Wait for pop animation to finish, then apply the rest
-        setTimeout(() => {
-          // Trigger the pop-clear
-          pg.clear();
-          // Set slider values
-          const gravity = 1.0;
-          const bounce = 0.9;
-          const boost = 50;
-          const pattern = "random";
-          const enableCollision = false;
-          const size = Math.max(40, window.innerWidth * 0.05);
-
-          document.getElementById("gravitySlider").value = gravity;
-          document.getElementById("bouncinessSlider").value = bounce;
-          document.getElementById("clickBoostSlider").value = boost;
-          document.getElementById("patternSelect").value = pattern;
-          document.getElementById("collisionToggle").checked = enableCollision;
-          document.getElementById("sizeSlider").value = size;
-          document.getElementById("sizeValue").textContent = size;
-
-          // Retrigger all slider logic
-          document.getElementById("gravitySlider").dispatchEvent(new Event("input"));
-          document.getElementById("bouncinessSlider").dispatchEvent(new Event("input"));
-          document.getElementById("clickBoostSlider").dispatchEvent(new Event("input"));
-          document.getElementById("sizeSlider").dispatchEvent(new Event("input"));
-   
+          // 2. Wait 350ms → run pg.clear()
           setTimeout(() => {
-            const color = colorOptions[Math.floor(Math.random() * colorOptions.length)];
-            pg.spawn(pg.spawnSize, -pg.spawnSize * 3, 'circle', pg.spawnSize, 'solid', true, color);
-          }, 500); // Match pop duration (adjust if needed)
-         }, 500); 
-      });
+            pg.clear();
+
+            // 3. After another 350ms → reset sliders and spawn new ball
+            setTimeout(() => {
+              const gravity = 1.0;
+              const bounce = 0.9;
+              const boost = 50;
+              const pattern = "random";
+              const enableCollision = false;
+              const size = Math.max(40, window.innerWidth * 0.05);
+
+              // Set slider values visually
+              document.getElementById("gravitySlider").value = gravity;
+              document.getElementById("bouncinessSlider").value = bounce;
+              document.getElementById("clickBoostSlider").value = boost;
+              document.getElementById("patternSelect").value = pattern;
+              document.getElementById("collisionToggle").checked = enableCollision;
+              document.getElementById("sizeSlider").value = size;
+              document.getElementById("sizeValue").textContent = size;
+
+              // Re-trigger all slider logic (updates pg properties and ball sizes)
+              document.getElementById("gravitySlider").dispatchEvent(new Event("input"));
+              document.getElementById("bouncinessSlider").dispatchEvent(new Event("input"));
+              document.getElementById("clickBoostSlider").dispatchEvent(new Event("input"));
+              document.getElementById("sizeSlider").dispatchEvent(new Event("input"));
+
+              // Spawn new initial ball
+              const color = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+              pg.spawn(pg.spawnSize, -pg.spawnSize * 3, 'circle', pg.spawnSize, 'solid', true, color);
+            }, 400); // Wait after pg.clear
+          }, 350); // Initial delay before clear
+        });
+
 
 
         // Resize canvas
