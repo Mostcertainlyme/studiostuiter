@@ -324,6 +324,9 @@ class Ball {
     this.markedForRemoval = false;
     this.removalProgress = 0;
     this._shouldDelete = false;
+
+    this.originalRadius = size; // ← Save the starting radius
+    this.radius = size;   
   }
 
   // removal function
@@ -412,9 +415,20 @@ class Ball {
     ctx.rotate(this.angle);
 
     // Animate scale if being removed
-    const scale = this.markedForRemoval ? 1 - this.removalProgress : 1;
-    const alpha = this.markedForRemoval ? 1 - this.removalProgress : 1;
-    ctx.scale(scale, scale);
+    let scaleFactor = 1;
+
+    if (this.markedForRemoval) {
+      const t = this.removalProgress; // from 0 → 1
+      // Pop easing: slight overshoot then shrink
+      scaleFactor = 1 + 0.3 * Math.sin(Math.PI * t) * (1 - t);
+    }
+    let alpha = 1;
+    if (this.markedForRemoval) {
+      const t = this.removalProgress;
+      alpha = t < 0.7 ? 1 : 1 - ((t - 0.7) / 0.3); // Fade only in last 30% of animation
+      alpha = Math.max(0, alpha); // Clamp to 0
+    }
+    ctx.scale(scaleFactor, scaleFactor);
     ctx.globalAlpha = alpha;
 
     // apply shadow is enabled

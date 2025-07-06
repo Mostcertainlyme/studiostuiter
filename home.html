@@ -977,6 +977,7 @@ document.getElementById('imageModal').addEventListener('click', function (e) {
         // Gravity slider
         setupSliderFill("gravitySlider", "gravityFill", (val) => {
           pg.gravity = val;
+          
         });
 
         setupSliderFill("bouncinessSlider", "bouncinessFill", (val) => {
@@ -991,9 +992,13 @@ document.getElementById('imageModal').addEventListener('click', function (e) {
 
         setupSliderFill("sizeSlider", "sizeFill", (val) => {
           pg.spawnSize = val;
-          pg.balls.forEach(ball => ball.radius = val);
+          pg.balls.forEach(ball => {
+            ball.radius = val;
+            ball.originalRadius = val; // 👈 ensure pop animation uses correct size
+          });
           document.getElementById("sizeValue").textContent = val;
         });
+
 
         pg.obstacles = pg.obstacles || [];
         pg.obstacleData = pg.obstacleData || new Map();
@@ -1043,14 +1048,20 @@ document.getElementById('imageModal').addEventListener('click', function (e) {
 
 
         // Reset button
-        document.getElementById("resetButton").addEventListener("click", () => {
-          
-          document.getElementById("bouncyMenu").classList.remove("open");
-          document.getElementById("menuOverlay")?.classList.remove("active");
-          setTimeout(() => {
-            pg.clear();
-          },400)
+       document.getElementById("resetButton").addEventListener("click", () => {
+        // Close menu
+        document.getElementById("bouncyMenu").classList.remove("open");
+        document.getElementById("menuOverlay")?.classList.remove("active");
 
+ 
+
+
+
+        // Wait for pop animation to finish, then apply the rest
+        setTimeout(() => {
+          // Trigger the pop-clear
+          pg.clear();
+          // Set slider values
           const gravity = 1.0;
           const bounce = 0.9;
           const boost = 50;
@@ -1064,41 +1075,21 @@ document.getElementById('imageModal').addEventListener('click', function (e) {
           document.getElementById("patternSelect").value = pattern;
           document.getElementById("collisionToggle").checked = enableCollision;
           document.getElementById("sizeSlider").value = size;
-          
-          // update slider fills
-          setupSliderFill("gravitySlider", "gravityFill", (val) => {
-            pg.gravity = val;
-          });
+          document.getElementById("sizeValue").textContent = size;
 
-          setupSliderFill("bouncinessSlider", "bouncinessFill", (val) => {
-            pg.bounceFactor = val;
-            document.getElementById("bouncinessValue").textContent = val.toFixed(2);
-          });
-
-          setupSliderFill("clickBoostSlider", "clickBoostFill", (val) => {
-            pg.clickBoost = val;
-            document.getElementById("boostValue").textContent = val;
-          });
-
-          setupSliderFill("sizeSlider", "sizeFill", (val) => {
-            pg.spawnSize = val;
-            pg.balls.forEach(ball => ball.radius = val);
-            document.getElementById("sizeValue").textContent = val;
-          });
-
-
-          pg.gravity = gravity;
-          pg.bounceFactor = bounce;
-          pg.clickBoost = boost;
-          pg.pattern = pattern;
-          pg.enableCollision = enableCollision;
-          pg.spawnSize = size;
-
+          // Retrigger all slider logic
+          document.getElementById("gravitySlider").dispatchEvent(new Event("input"));
+          document.getElementById("bouncinessSlider").dispatchEvent(new Event("input"));
+          document.getElementById("clickBoostSlider").dispatchEvent(new Event("input"));
+          document.getElementById("sizeSlider").dispatchEvent(new Event("input"));
+   
           setTimeout(() => {
             const color = colorOptions[Math.floor(Math.random() * colorOptions.length)];
             pg.spawn(pg.spawnSize, -pg.spawnSize * 3, 'circle', pg.spawnSize, 'solid', true, color);
-          }, 1000);
-        });
+          }, 500); // Match pop duration (adjust if needed)
+         }, 500); 
+      });
+
 
         // Resize canvas
         function resizeCanvas() {
