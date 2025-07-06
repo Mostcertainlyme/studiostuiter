@@ -1029,13 +1029,27 @@ document.getElementById('imageModal').addEventListener('click', function (e) {
           });
         }
 
+        document.getElementById("clearButton").addEventListener("click", () => {
+          // Close the bouncy menu
+          document.getElementById("bouncyMenu").classList.remove("open");
+          document.getElementById("menuOverlay")?.classList.remove("active");
+
+          // Wait for the animation to complete, then clear balls
+          setTimeout(() => {
+            pg.clear();
+          }, 400); // match the CSS transition time (0.3s)
+        });
+
 
 
         // Reset button
         document.getElementById("resetButton").addEventListener("click", () => {
-          pg.clear();
+          
           document.getElementById("bouncyMenu").classList.remove("open");
           document.getElementById("menuOverlay")?.classList.remove("active");
+          setTimeout(() => {
+            pg.clear();
+          },400)
 
           const gravity = 1.0;
           const bounce = 0.9;
@@ -1083,7 +1097,7 @@ document.getElementById('imageModal').addEventListener('click', function (e) {
           setTimeout(() => {
             const color = colorOptions[Math.floor(Math.random() * colorOptions.length)];
             pg.spawn(pg.spawnSize, -pg.spawnSize * 3, 'circle', pg.spawnSize, 'solid', true, color);
-          }, 350);
+          }, 1000);
         });
 
         // Resize canvas

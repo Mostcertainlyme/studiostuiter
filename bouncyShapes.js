@@ -678,12 +678,7 @@ export function setupBouncyControls(pg) {
   });
 
 
-  const clearBtn = document.getElementById('clearButton');
-  if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
-      pg.clear(); // 🧼 clears the balls array
-    });
-  }
+
   const chaosBtn = document.getElementById('chaosButton');
   if (chaosBtn) {
     chaosBtn.addEventListener('click', () => {
@@ -718,7 +713,7 @@ export function setupBouncyControls(pg) {
           );
         }
         console.log(`[DEBUG] Spawned ${howMany} chaotic shapes.`);
-      }, 300); // ⏱ Adjust delay if needed
+      }, 400); // ⏱ Adjust delay if needed
     });
   }
 }
