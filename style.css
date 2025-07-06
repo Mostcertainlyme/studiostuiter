@@ -567,7 +567,7 @@ footer h2 {
 
 #patternSelectOption,
 #collisionToggleOption,
-.bouncy-menu #clearButton,
+/* .bouncy-menu #clearButton, */
 .bouncy-menu #boostLabel {
 
   display: none;
@@ -601,6 +601,12 @@ footer h2 {
   z-index: 1000;
   /* animation: stuiterBounce 1.5s infinite; */
   /* animation-timing-function: linear; */
+}
+/* hide on desktop cause its unnecesary */
+  @media (min-width: 769px) {
+  .scroll-arrow {
+    display: none;
+  }
 }
 
 .scroll-arrow:hover {
@@ -955,35 +961,33 @@ footer p {
 
 .scroll-up-wrapper {
   width: 100%;
-  text-align: center;
-  position: relative;
-  margin: 0;
+  display: flex;
+  justify-content: flex-start; /* align to the left */
+  padding-left: 1.3rem;          /* spacing from the left edge */
+  margin-top: 3rem;
+  position: absolute;
   z-index: var(--foreground-index);
 }
-
 .scroll-up-arrow {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  margin-left: 1vw;
-  background-color: var(--accent-color);
+  width: 60px;
+  height: 60px;
   border: none;
   border-radius: 50%;
+  background-color: var(--studio-color);
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  /* animation: stuiterBounce 1.5s infinite;
-  animation-timing-function: linear; */
-  transition: all 0.3s ease;
-  margin-top: 0;
 }
 
 
 .scroll-up-arrow:hover {
   animation: none;
-  background-color: var(--text-dark);
   transform: scale(1.1);
+  background-color: var(--studio-color);
+  box-shadow: 0 6px 20px #3232327d;
 }
 
 .scroll-up-arrow .arrow-icon {
@@ -1184,6 +1188,7 @@ footer p {
     left: 20px;
   }
 
+
   .arrow-icon {
     width: 20px;
     height: 20px;
@@ -1283,7 +1288,7 @@ footer p {
     height: 45px;
     top: 0.5rem;
     left: 0.5rem;
-      background-color: var(--studio-color);
+    background-color: var(--studio-color);
 
   }
 

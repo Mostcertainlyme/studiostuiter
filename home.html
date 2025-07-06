@@ -191,7 +191,7 @@
 
     <!-- Action Buttons -->
     <button id="chaosButton">Chaos!</button>
-    <button id="clearButton">Clear Shapes</button>
+    <button id="clearButton">No Fun</button>
     <button id="resetButton">Reset</button>
   </div>
 </div>
@@ -629,12 +629,11 @@
           <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
         </svg>
       </button>
+    </div>
 
   <footer class ="obstacle">
     <h2>Stuiter mij omhoog</h2>
     <p>© 2025 Studio Stuiter</p>
-    
-
   </footer>
 
   <script>
@@ -700,15 +699,18 @@
 
     // Check if intro section is visible and hide/show scroll arrow accordingly
     function checkIntroVisibility() {
-      const introSection = document.querySelector('.intro');
-      const scrollArrow = document.querySelector('.scroll-arrow');
-      const rect = introSection.getBoundingClientRect();
-      
-      // If intro section is completely out of view (top is above viewport)
-      if (rect.bottom <= 0) {
-        scrollArrow.style.display = 'none';
-      } else {
-        scrollArrow.style.display = 'flex';
+      // only check if were on desktop resolutions
+      if (window.innerWidth < 768) {
+          const introSection = document.querySelector('.intro');
+          const scrollArrow = document.querySelector('.scroll-arrow');
+          const rect = introSection.getBoundingClientRect();
+          
+          // If intro section is completely out of view (top is above viewport)
+          if (rect.bottom <= 0) {
+            scrollArrow.style.display = 'none';
+          } else {
+            scrollArrow.style.display = 'flex';
+          }
       }
     }
 
