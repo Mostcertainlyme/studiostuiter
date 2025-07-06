@@ -96,7 +96,12 @@ export default class BouncyShapesPlayground {
     return ball;
   }
 
-  clear()  { this.balls.length = 0; }
+  clear() {
+    for (const ball of this.balls) {
+      ball.markForRemoval();
+    }
+  }
+
   destroy() {
     cancelAnimationFrame(this._raf);
     window.removeEventListener('resize', this._resizeCanvas);
@@ -260,19 +265,23 @@ _animate () {
   /* ------------------------------------------------------------------
    * 3.  Update & draw every ball
    * -----------------------------------------------------------------*/
-  for (const b of this.balls) {
-    /* Obstacle interaction */
-    for (const ob of this.obstacles) checkObstacleCollision(b, ob);
+  // Ball update & draw loop (includes pop logic)
+  for (let i = this.balls.length - 1; i >= 0; i--) {
+    const b = this.balls[i];
 
-    /* Inertial “pseudo-force” from window acceleration (opposite sign) */
-    b.vx -= this.winAxCanvas * this.inertiaFactor;
-    b.vy -= this.winAyCanvas * this.inertiaFactor;
+    if (b._shouldDelete) {
+      this.balls.splice(i, 1);
+      continue;
+    }
 
-     /* NEW — impulse from phone shake */
-     b.vx += this.shakeAx * this.motionFactor;
-     b.vy += this.shakeAy * this.motionFactor;
+    if (!b.markedForRemoval) {
+      for (const ob of this.obstacles) checkObstacleCollision(b, ob);
+      b.vx -= this.winAxCanvas * this.inertiaFactor;
+      b.vy -= this.winAyCanvas * this.inertiaFactor;
+      b.vx += this.shakeAx * this.motionFactor;
+      b.vy += this.shakeAy * this.motionFactor;
+    }
 
-    /* Gravity, scroll-momentum, edge handling, etc. */
     b.update();
     b.draw();
   }
@@ -310,9 +319,29 @@ class Ball {
     this.angularVelocity = (Math.random() - 0.5) * 0.2;
     this.ignoreEdgesUntilVisible = outside;
     this.touchedObstacles = new Set();
+
+    // removal
+    this.markedForRemoval = false;
+    this.removalProgress = 0;
+    this._shouldDelete = false;
+  }
+
+  // removal function
+  markForRemoval() {
+    this.markedForRemoval = true;
+    this.removalProgress = 0;
   }
 
   update() {
+
+    if (this.markedForRemoval) {
+      this.removalProgress += 0.1; // adjust speed of pop
+      if (this.removalProgress >= 1) {
+        this._shouldDelete = true;
+      }
+      return; // skip physics updates
+    }
+
     const pg = this.pg;
 
     /* basic Euler step */
@@ -382,6 +411,12 @@ class Ball {
     ctx.translate(this.x, this.y);
     ctx.rotate(this.angle);
 
+    // Animate scale if being removed
+    const scale = this.markedForRemoval ? 1 - this.removalProgress : 1;
+    const alpha = this.markedForRemoval ? 1 - this.removalProgress : 1;
+    ctx.scale(scale, scale);
+    ctx.globalAlpha = alpha;
+
     // apply shadow is enabled
     if (this.pg.enableShadow) {
       ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
@@ -405,6 +440,7 @@ class Ball {
     else { ctx.fillStyle = this.color; ctx.fill(); }
 
     ctx.restore();
+    ctx.globalAlpha = 1;
   }
 }
 
