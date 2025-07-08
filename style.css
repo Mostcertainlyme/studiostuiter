@@ -947,7 +947,7 @@ footer {
   background-color: var(--bg-color);
   color: white;
   text-align: center;
-  padding: 2rem 1rem;
+  padding: rem 1rem;
   position: relative;
   z-index: var(--background-index);
   margin: 0;
@@ -960,16 +960,16 @@ footer h2 {
 }
 
 footer p {
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   opacity: 0.8;
 }
 
 .scroll-up-wrapper {
   width: 100%;
   display: flex;
-  justify-content: flex-start; /* align to the left */
-  padding-left: 48.5%;          /* spacing from the left edge */
-  margin-top: 3rem;
+  justify-content: center; /* align to the left */
+  /* padding-left: 48.5%;          spacing from the left edge */
+  margin-top: 2rem;
   position: absolute;
 }
 
@@ -1193,6 +1193,22 @@ footer p {
     left: 20px;
   }
 
+  .scroll-up-wrapper {
+    margin-top: 3rem;
+  }
+
+  footer {
+    margin-bottom: -1rem;
+   
+    padding: 0rem;
+  }
+  footer p {
+    padding-bottom: 1rem;
+  }
+
+
+
+
 
   .arrow-icon {
     width: 20px;
@@ -1291,8 +1307,8 @@ footer p {
   .scroll-up-arrow {
     width: 45px;
     height: 45px;
-    top: 0.5rem;
-    left: 0.5rem;
+    top: 0.5em;
+    left: 0.5em;
     background-color: var(--studio-color);
 
   }
