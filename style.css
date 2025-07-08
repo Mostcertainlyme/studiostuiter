@@ -544,7 +544,7 @@ footer h2 {
   margin-top: 2rem;
 }
 
-.bouncy-menu #chaosButton,
+/* .bouncy-menu #chaosButton,
 .bouncy-menu #clearButton,
 .bouncy-menu #resetButton {
   background: linear-gradient(45deg, var(--studio-color), var(--accent-color));
@@ -566,8 +566,26 @@ footer h2 {
   width: 100%;
   margin-bottom: 1rem;
 
-}
+} */
 
+.bouncy-menu #chaosButton,
+.bouncy-menu #clearButton,
+.bouncy-menu #resetButton {
+  padding: 0.8rem 1.5rem;
+  background-color: var(--accent-color);
+  color: var(--text-light);
+  border-radius: 40px;
+  border: var(--stuiter-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  width: 100%;
+}
 
 
 #patternSelectOption,
